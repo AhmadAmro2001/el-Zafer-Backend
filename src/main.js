@@ -1,6 +1,4 @@
 import express from 'express';
-import dns from 'dns';
-dns.setDefaultResultOrder('ipv4first');
 import {config} from 'dotenv';
 config();
 import { database_connection } from './DB/connection.js';
@@ -21,11 +19,9 @@ const bootstrap = async ()=>{
     app.use(cors(corsOptions))
     controllerHandler(app)
     database_connection();
-    // app.get('/',)
+   
 
-    app.listen(process.env.PORT , () => {
-        console.log('Server running on port ' + process.env.PORT)
-    });
+    return app;
 }
 
 

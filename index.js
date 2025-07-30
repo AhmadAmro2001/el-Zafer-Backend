@@ -1,4 +1,7 @@
 import bootstrap from "./src/main.js";
 
 
-bootstrap()
+
+const app = bootstrap()
+
+export default app;
