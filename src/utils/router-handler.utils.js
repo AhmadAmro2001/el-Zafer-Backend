@@ -23,11 +23,9 @@ const controllerHandler = (app)=>{
     app.use('/track-shipment',trackShipmentController)
     
     app.get('/',async (req, res) => res.status(200).json({ message: 'Welcome to El Zafer API' }))
-    app.all('*', 
-        (req, res) => res.status(404).json(
-            { message: 'Route not found please make sure from your url and your method' }
-        )
-    )
+    app.use((req, res) => {
+        res.status(404).json({ message: 'Route not found.' });
+      });
 }
 
 export default controllerHandler
