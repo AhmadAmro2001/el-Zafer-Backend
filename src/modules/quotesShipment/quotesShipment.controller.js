@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as quotesShipmentService from "./services/quotesShipment.services.js";
-import { errorHandler } from "../../middleware/index.js";
+import { errorHandler , authenticationMiddleware } from "../../middleware/index.js";
 
 
 const quotesShipmentController = Router();
