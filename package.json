@@ -4,10 +4,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build":"npm i",
-    "start":"node .",
-    "start:dev":"nodemon ."
-  },"engines": {
+    "build": "npm i",
+    "start": "node .",
+    "start:dev": "nodemon ."
+  },
+  "engines": {
     "node": ">=18.0.0"
   },
   "author": "",
