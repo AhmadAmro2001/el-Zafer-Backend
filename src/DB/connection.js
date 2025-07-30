@@ -1,5 +1,7 @@
 import {Sequelize} from 'sequelize';
 import pg from 'pg';
+import tedious from 'tedious'; 
+
 import {config} from 'dotenv';
 config();
 
