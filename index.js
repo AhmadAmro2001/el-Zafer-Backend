@@ -2,8 +2,8 @@ import bootstrap from "./src/main.js";
 
 
 
-const app = bootstrap()
+// const app = bootstrap()
 
-export default app;
+// export default app;
 
-// bootstrap();
+bootstrap();
