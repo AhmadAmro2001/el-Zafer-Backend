@@ -6,7 +6,7 @@ import controllerHandler from './utils/router-handler.utils.js';
 import cors from 'cors';
 
 const corsOptions = {
-    origin: [process.env.FRONTEND_ORIGIN,process.env.CORS_ORIGIN,'http://localhost:5173/contact'], 
+    origin: [process.env.FRONTEND_ORIGIN,process.env.CORS_ORIGIN,'http://localhost:5173/'], 
     methods: ['GET', 'POST'],
     credentials: true,
 }
