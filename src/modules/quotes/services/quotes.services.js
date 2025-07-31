@@ -3,12 +3,12 @@ import { quotesModel} from "../../../DB/models/index.js";
 
 // getting quote
 export const getQuote = async(req,res)=>{
-    const{name , email , phoneCode , phoneNumber , message}= req.body;
+    const{name , email  , phoneNumber , message}= req.body;
     // save it to quotes table
     const data = quotesModel.build({
         name,
         email,
-        phoneCode:JSON.stringify(phoneCode),
+        // phoneCode:JSON.stringify(phoneCode),
         phoneNumber,
         message
     });

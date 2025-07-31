@@ -31,26 +31,26 @@ const quotesModel = sequelizeConfig.define('tbl_quotes',{
         type:DataTypes.STRING,
         allowNull:false
     },
-    phoneCode: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        defaultValue: {
-          flag: '',
-          id: '',
-          code: ''
-        },
-        validate: {
-            isValidJson(value) {
-              const allowed = new Set(countries.map(normalize));
-              const incoming = normalize(value);
+    // phoneCode: {
+    //     type: DataTypes.JSON,
+    //     allowNull: false,
+    //     defaultValue: {
+    //       flag: '',
+    //       id: '',
+    //       code: ''
+    //     },
+    //     validate: {
+    //         isValidJson(value) {
+    //           const allowed = new Set(countries.map(normalize));
+    //           const incoming = normalize(value);
           
-              console.log('Normalized incoming:', incoming);
-              if (!allowed.has(incoming)) {
-                throw new Error('Invalid phone code object');
-              }
-            }
-          }
-    },
+    //           console.log('Normalized incoming:', incoming);
+    //           if (!allowed.has(incoming)) {
+    //             throw new Error('Invalid phone code object');
+    //           }
+    //         }
+    //       }
+    // },
     phoneNumber:{
         type:DataTypes.STRING,
         allowNull:false
