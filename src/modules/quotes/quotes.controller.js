@@ -7,6 +7,6 @@ import { errorHandler , authenticationMiddleware } from "../../middleware/index.
 const quotesController = Router();
 
 quotesController.post('/send-quote',errorHandler(quotesService.getQuote));
-quotesController.get('/list-quotes',authenticationMiddleware(),errorHandler(quotesService.listQuotes));
+quotesController.get('/list-quotes',errorHandler(quotesService.listQuotes));
 
 export default quotesController

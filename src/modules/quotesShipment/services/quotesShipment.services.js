@@ -45,21 +45,18 @@ export const addQuoteForClearness = async(req,res)=>{
 
 // listing all import quotes
 export const listImportQuotes = async(req,res)=>{
-    const {id}= req.loggedInUser;
     const data = await importQuotesModel.findAll();
     return res.status(200).json({message:'Quotes listed successfully',data})
 }
 
 // listing all export quotes
 export const listExportQuotes = async(req,res)=>{
-    const {id}= req.loggedInUser;
     const data = await exportQuotesModel.findAll();
     return res.status(200).json({message:'Quotes listed successfully',data})
 }
 
 // listing all clearness quotes
 export const listClearnessQuotes = async(req,res)=>{
-    const {id}= req.loggedInUser;
     const data = await quotesClearnessModel.findAll();
     return res.status(200).json({message:'Quotes listed successfully',data})
 }

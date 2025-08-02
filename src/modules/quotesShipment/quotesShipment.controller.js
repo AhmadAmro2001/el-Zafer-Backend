@@ -8,9 +8,9 @@ const quotesShipmentController = Router();
 quotesShipmentController.post('/add-quote-for-import',errorHandler(quotesShipmentService.addQuoteForImport));
 quotesShipmentController.post('/add-quote-for-export',errorHandler(quotesShipmentService.addQuoteForExport));
 quotesShipmentController.post('/add-quote-for-clearness',errorHandler(quotesShipmentService.addQuoteForClearness));
-quotesShipmentController.get('/list-import',authenticationMiddleware(),errorHandler(quotesShipmentService.listImportQuotes));
-quotesShipmentController.get('/list-export',authenticationMiddleware(),errorHandler(quotesShipmentService.listExportQuotes));
-quotesShipmentController.get('/list-clearance',authenticationMiddleware(),errorHandler(quotesShipmentService.listClearnessQuotes));
+quotesShipmentController.get('/list-import',errorHandler(quotesShipmentService.listImportQuotes));
+quotesShipmentController.get('/list-export',errorHandler(quotesShipmentService.listExportQuotes));
+quotesShipmentController.get('/list-clearance',errorHandler(quotesShipmentService.listClearnessQuotes));
 
 
 export default quotesShipmentController
