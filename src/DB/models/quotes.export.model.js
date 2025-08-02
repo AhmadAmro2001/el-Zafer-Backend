@@ -13,15 +13,15 @@ const exportQuotesModel = sequelizeConfig.define('tbl_quotes_export',{
             allowNull:false
         },
         numberOfContainers:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.STRING,
             allowNull:false
         },
         numberOfPcs:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.STRING,
             allowNull:false
         },
         expectedRate:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.STRING,
             allowNull:false
         },
         emailOrPhone:{
