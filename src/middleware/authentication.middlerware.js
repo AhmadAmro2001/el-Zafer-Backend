@@ -10,7 +10,7 @@ export const authenticationMiddleware = ()=>{
             // verify token
             const decodedData = jwt.verify(accesstoken ,process.env.JWT_SECRET_LOGIN);
             // check if blacklisted
-            const isBlackListed = await blacklistTokensModel.findOne({tokenId: decodedData.jti})
+            const isBlackListed = await blacklistTokensModel.findOne({ where: { tokenId: decodedData.jti } });
             if(isBlackListed) return res.status(401).json({message: "please login first" });
             // data from db of admins
             const user = await adminModel.findOne({where:{id:decodedData.id}},'-password -__v ');

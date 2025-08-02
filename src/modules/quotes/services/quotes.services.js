@@ -20,5 +20,6 @@ export const getQuote = async(req,res)=>{
 export const listQuotes = async(req,res)=>{
     const {id}= req.loggedInUser;
     const data = await quotesModel.findAll();
+    console.log("Admin ID:", req.loggedInUser?.id);
     return res.status(200).json({message:'Quotes listed successfully',data})
 }

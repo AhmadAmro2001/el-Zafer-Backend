@@ -1,6 +1,7 @@
 import { compareSync, hashSync } from "bcrypt";
 import {adminModel, blacklistTokensModel} from "../../../DB/models/index.js";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
 
 
 // adding an admin
@@ -23,24 +24,39 @@ export const addAdmin = async (req,res)=>{
 }
 
 // login admin
-export const loginAdmin = async (req,res)=>{
-    
-        const { email , password} = req.body;
-        const checkEmail = await adminModel.findOne({where:{email}})
-        if(!checkEmail){
-            return res.status(400).json({message:'Email does not exist'})
-        }
-        const isMatch = compareSync(password,checkEmail.password)
-        if(!isMatch){
-            return res.status(400).json({message:'Invalid password'})
-        }
-        const token = jwt.sign({id:checkEmail.id},process.env.JWT_SECRET_LOGIN,{
-            expiresIn:'1h'
-        })
 
-        return res.status(200).json({message:'Admin logged in successfully',token})
-    
-}
+export const loginAdmin = async (req, res) => {
+  const { email, password } = req.body;
+  const checkEmail = await adminModel.findOne({ where: { email } });
+
+  if (!checkEmail) {
+    return res.status(400).json({ message: 'Email does not exist' });
+  }
+
+  const isMatch = compareSync(password, checkEmail.password);
+  if (!isMatch) {
+    return res.status(400).json({ message: 'Invalid password' });
+  }
+
+  const jti = uuidv4(); // ✅ generate unique token ID
+
+  const token = jwt.sign(
+    {
+      id: checkEmail.id,
+      jti, // ✅ include jti
+    },
+    process.env.JWT_SECRET_LOGIN,
+    {
+      expiresIn: '1h',
+    }
+  );
+
+  return res.status(200).json({
+    message: 'Admin logged in successfully',
+    token,
+  });
+};
+
 
 // logout api
 export const logOutService = async (req,res)=>{

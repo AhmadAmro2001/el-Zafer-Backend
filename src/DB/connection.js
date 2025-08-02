@@ -51,8 +51,8 @@ export const mssqlSequelize = new Sequelize(process.env.DB_NAME, process.env.DB_
       await sequelizeConfig.authenticate();
       console.log("✅ Supabase connection established!");
   
-      await sequelizeConfig.sync({ alter: true });
-      console.log("✅ Supabase models synced!");
+      // await sequelizeConfig.sync({ alter: true });
+      // console.log("✅ Supabase models synced!");
   
       // Connect to SQL Server
       await mssqlSequelize.authenticate();
