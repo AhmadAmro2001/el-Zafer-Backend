@@ -17,7 +17,7 @@ const quotesClearnessModel = sequelizeConfig.define('tbl_quotes_clearness',{
         allowNull:false
     },
     requiredService:{
-        type:DataTypes.ENUM('Clearness','Transportation','Freight'),
+        type:DataTypes.STRING,
         allowNull:false
     }    
 },{
