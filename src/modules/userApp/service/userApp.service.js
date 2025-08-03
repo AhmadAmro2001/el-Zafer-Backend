@@ -1,6 +1,6 @@
-import { userModel } from "../../../DB/models/user.app.model";
+import { userModel,blacklistTokensModel } from "../../../DB/models/index.js";
 import { compareSync } from "bcrypt";
-import { uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 import jwt from "jsonwebtoken";
 import { hashSync } from "bcrypt";
 
