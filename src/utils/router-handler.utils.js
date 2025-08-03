@@ -4,6 +4,7 @@ import quotesController from "../modules/quotes/quotes.controller.js"
 import trackShipmentController from "../modules/trackShipment/trackShipment.controller.js"
 import helmet from "helmet"
 import {rateLimit} from "express-rate-limit"
+import { userAppController } from "../modules/userApp/userApp.controller.js"
 
 
 
@@ -18,6 +19,7 @@ const controllerHandler = (app)=>{
     app.use(helmet())
     app.use(limiter)
     app.use('/admin',adminController)
+    app.use('/user',userAppController)
     app.use('/quotes',quotesController)             
     app.use('/quotes/shipment',quotesShipmentController)
     app.use('/track-shipment',trackShipmentController)
