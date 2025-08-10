@@ -26,7 +26,7 @@ export const trackingLCLByContainerService =async( req,res)=>{
 // tracking lcl by housebillno
 export const trackingLCLByHouseBillNoService = async(req,res)=>{
     const{HousBillNo , NOOfPcs , TotalWeight , Destination} = req.query;
-    const data = await mssqlSequelize.query(`SELECT Arrived ,DORelease , Stored,Clearance FROM vw_TrackingLCLByHouseBlNO WHERE HousBillNo = '${HousBillNo}' AND NOOfPcs IS NULL AND TotalWeight = ${TotalWeight} AND Destination = '${Destination}'`);
+    const data = await mssqlSequelize.query(`SELECT Arrived ,DORelease , Stored,Clearance FROM vw_TrackingLCLByHouseBlNO WHERE HousBillNo = '${HousBillNo}' AND NOOfPcs = ${NOOfPcs} AND TotalWeight = ${TotalWeight} AND Destination = '${Destination}'`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
@@ -37,7 +37,7 @@ export const trackingLCLByHouseBillNoService = async(req,res)=>{
 // tracking personal effect
 export const trackingPersonalEffectService = async(req,res)=>{
     const {HousBillNo , NOOfPcs , TotalWeight , Destination}= req.query;
-    const data = await mssqlSequelize.query(`SELECT Arrived,Delivered FROM vw_trackingPersonalEffect WHERE HousBillNo = '${HousBillNo}' AND NOOfPcs IS NULL AND TotalWeight = ${TotalWeight} AND Destination = '${Destination}'`);
+    const data = await mssqlSequelize.query(`SELECT Arrived,Delivered FROM vw_trackingPersonalEffect WHERE HousBillNo = '${HousBillNo}' AND NOOfPcs = ${NOOfPcs} AND TotalWeight = ${TotalWeight} AND Destination = '${Destination}'`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
@@ -69,7 +69,7 @@ export const trackingClearanceByContainerNoService = async(req,res)=>{
 // tracking air flight
 export const trackingAirFlightService = async(req,res)=>{
     const {AWBNo , Destination, NOOfPcs , TotalWeight}= req.query;
-    const data = await mssqlSequelize.query(`SELECT ArrivalDate,cleared FROM vw_TrackingAirFreightShipment WHERE AWBNo = '${AWBNo}' AND Destination = '${Destination}' AND NOOfPcs IS NULL AND TotalWeight = ${TotalWeight}`);
+    const data = await mssqlSequelize.query(`SELECT ArrivalDate,cleared FROM vw_TrackingAirFreightShipment WHERE AWBNo = '${AWBNo}' AND Destination = '${Destination}' AND NOOfPcs = ${NOOfPcs} AND TotalWeight = ${TotalWeight}`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
