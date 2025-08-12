@@ -15,7 +15,7 @@ export const trackingFullContainerService = async (req,res)=>{
 // tracking lcl by container
 export const trackingLCLByContainerService =async( req,res)=>{
     const {BillNumber , ContainerNumber , PortOfDischarge}= req.query;
-    const data = await mssqlSequelize.query(`SELECT HousBillNo,NOOfPcs,DORelease FROM vw_trackingLCLByContainer WHERE BillNumber = '${BillNumber}' AND ContainerNumber = '${ContainerNumber}' AND PortOfDischarge = '${PortOfDischarge}'`);
+    const data = await mssqlSequelize.query(`SELECT HousBillNo,NOOfPcs,DORelease FROM vw_trackingLCLByContainer WHERE ContainerNumber = '${ContainerNumber}' AND PortOfDischarge = '${PortOfDischarge}'`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
@@ -62,7 +62,7 @@ export const trackingClearanceByContainerNoService = async(req,res)=>{
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
-    const result = data[0];
+    const result = data;
     return res.status(200).json({message:'Data found',result})
 }
 
