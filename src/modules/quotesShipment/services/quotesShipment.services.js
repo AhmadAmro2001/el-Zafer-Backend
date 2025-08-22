@@ -27,7 +27,7 @@ export const addQuoteForImport = async(req,res)=>{
     `
     await transporter.sendMail({
         from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES,
+        to: process.env.SMTP_IMPORT,
         subject:'Import Quote',
         html
     })
@@ -61,7 +61,7 @@ export const addQuoteForExport = async(req,res)=>{
     `
     await transporter.sendMail({
         from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES,
+        to: process.env.SMTP_EXPORT,
         subject:'Export Quote',
         html
     })
@@ -91,7 +91,7 @@ export const addQuoteForClearness = async(req,res)=>{
     `
     await transporter.sendMail({
         from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES,
+        to: process.env.SMTP_CLEARANCE,
         subject:'Clearness Quote',
         html
     })
