@@ -1,5 +1,5 @@
 import { quotesModel} from "../../../DB/models/index.js";
-
+import { messageSchema , transporter} from "../../../utils/email-handler.utils.js";
 
 // getting quote
 export const getQuote = async(req,res)=>{
@@ -8,10 +8,25 @@ export const getQuote = async(req,res)=>{
     const data = quotesModel.build({
         name,
         email,
-        // phoneCode:JSON.stringify(phoneCode),
         phoneNumber,
         message
     });
+    const validate = messageSchema.safeParse(req.body);
+    if(!validate.success){
+        return res.status(400).json({message:'Invalid data',validate})
+    }
+    const html = `
+    <h1>New Message</h1>
+    <p>Name: ${name}</p>
+    <p>Email: ${email}</p>
+    <p>Phone Number: ${phoneNumber}</p>
+    <p>Message: ${message}</p>
+    `
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES,
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})
 }

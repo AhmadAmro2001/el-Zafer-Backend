@@ -1,4 +1,5 @@
 import { exportQuotesModel, importQuotesModel, quotesClearnessModel } from "../../../DB/models/index.js";
+import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, transporter } from "../../../utils/email-handler.utils.js";
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{
@@ -11,6 +12,25 @@ export const addQuoteForImport = async(req,res)=>{
         expectedRate,
         emailOrPhone
     });
+    const validate = importQuoteSchema.safeParse(req.body);
+    if(!validate.success){
+        return res.status(400).json({message:'Invalid data',validate})
+    }
+    const html = `
+    <h1>New Import Quote</h1>
+    <p>Port of Loading: ${portOfLoading}</p>
+    <p>Port of Discharge: ${portOfDischarge}</p>
+    <p>Terms and Condition: ${termsAndCondition}</p>
+    <p>Number of Pcs: ${numberOfPcs}</p>
+    <p>Expected Rate: ${expectedRate}</p>
+    <p>Email or Phone: ${emailOrPhone}</p>
+    `
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES,
+        subject:'Import Quote',
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
@@ -26,6 +46,25 @@ export const addQuoteForExport = async(req,res)=>{
         expectedRate,
         emailOrPhone
     });
+    const validate = exportQuoteSchema.safeParse(req.body);
+    if(!validate.success){
+        return res.status(400).json({message:'Invalid data',validate})
+    }
+    const html = `
+    <h1>New Export Quote</h1>
+    <p>Port of Loading: ${portOfLoading}</p>
+    <p>Port of Discharge: ${portOfDischarge}</p>
+    <p>Number of Containers: ${numberOfContainers}</p>
+    <p>Number of Pcs: ${numberOfPcs}</p>
+    <p>Expected Rate: ${expectedRate}</p>
+    <p>Email or Phone: ${emailOrPhone}</p>
+    `
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES,
+        subject:'Export Quote',
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
@@ -39,6 +78,23 @@ export const addQuoteForClearness = async(req,res)=>{
         emailOrPhone,
         requiredService
     });
+    const validate = clearanceQuoteSchema.safeParse(req.body);
+    if(!validate.success){
+        return res.status(400).json({message:'Invalid data',validate})
+    }
+    const html = `
+    <h1>New Clearness Quote</h1>
+    <p>Port of Destination: ${portOfDestination}</p>
+    <p>Type of Cargo: ${typeOfCargo}</p>
+    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Required Service: ${requiredService}</p>
+    `
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES,
+        subject:'Clearness Quote',
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }   
