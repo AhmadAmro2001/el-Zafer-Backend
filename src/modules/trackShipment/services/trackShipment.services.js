@@ -52,7 +52,7 @@ export const trackingClearanceByBillNoService = async(req,res)=>{
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
-    const result = data[0];
+    const result = data[0][0];
     return res.status(200).json({message:'Data found',result})
 }
 // tracking clearance by container no
@@ -62,7 +62,7 @@ export const trackingClearanceByContainerNoService = async(req,res)=>{
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
-    const result = data;
+    const result = data[0][0];
     return res.status(200).json({message:'Data found',result})
 }
 
