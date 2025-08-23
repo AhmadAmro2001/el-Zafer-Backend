@@ -4,7 +4,7 @@ import { mssqlSequelize } from "../../../DB/connection.js";
 // tracking full container 
 export const trackingFullContainerService = async (req,res)=>{
     const {BillNumber, ContainerNumber,PortOfLoading,PortOfDischarge} = req.query;
-    const data = await mssqlSequelize.query(`SELECT ArrivalDate,DepartureDate FROM vw_trackingFullContainer WHERE BillNumber = '${BillNumber}' AND ContainerNumber = '${ContainerNumber}' AND PortOfLoading = '${PortOfLoading}' AND PortOfDischarge = '${PortOfDischarge}'`) ;
+    const data = await mssqlSequelize.query(`SELECT ArrivalDate,DepartureDate,PortOfLoading FROM vw_trackingFullContainer WHERE BillNumber = '${BillNumber}' AND ContainerNumber = '${ContainerNumber}' AND PortOfLoading = '${PortOfLoading}' AND PortOfDischarge = '${PortOfDischarge}'`) ;
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
