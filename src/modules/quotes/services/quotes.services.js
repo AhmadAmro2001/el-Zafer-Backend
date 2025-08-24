@@ -24,9 +24,14 @@ export const getQuote = async(req,res)=>{
     `
     await transporter.sendMail({
         from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES,
+        to: process.env.SMTP_MESSAGES_WAEL,
         html
-    })
+    });
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_ADEL,
+        html
+    });
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})
 }

@@ -69,7 +69,8 @@ export const trackingClearanceByContainerNoService = async(req,res)=>{
 // tracking air flight
 export const trackingAirFlightService = async(req,res)=>{
     const {AWBNo , Destination, NOOfPcs , TotalWeight}= req.query;
-    const data = await mssqlSequelize.query(`SELECT ArrivalDate,cleared FROM vw_TrackingAirFreightShipment WHERE AWBNo = '${AWBNo}' AND Destination = '${Destination}' AND NOOfPcs = '${NOOfPcs}' AND TotalWeight = ${TotalWeight}`);
+    // const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingAirFreightShipment WHERE destination = '${Destination}'`);
+    const data = await mssqlSequelize.query(`SELECT ArrivalDate,Cleared,DepartureDate,BLReleaseDate FROM vw_TrackingAirFreightShipment WHERE AWBNo = '${AWBNo}' AND Destination = '${Destination}' AND NOOfPcs = '${NOOfPcs}' AND TotalWeight = ${TotalWeight}`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
