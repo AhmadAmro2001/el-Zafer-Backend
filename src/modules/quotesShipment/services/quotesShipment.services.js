@@ -37,6 +37,24 @@ export const addQuoteForImport = async(req,res)=>{
         subject:'Import Quote',
         html
     })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_WAEL,
+        subject:'Import Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_ADEL,
+        subject:'Import Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_MAHMOUD,
+        subject:'Import Quote',
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
@@ -77,6 +95,24 @@ export const addQuoteForExport = async(req,res)=>{
         subject:'Export Quote',
         html
     })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_WAEL,
+        subject:'Export Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_ADEL,
+        subject:'Export Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_MAHMOUD,
+        subject:'Export Quote',
+        html
+    })
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
@@ -101,11 +137,29 @@ export const addQuoteForClearness = async(req,res)=>{
     <p>Port of Destination: ${portOfDestination}</p>
     <p>Type of Cargo: ${typeOfCargo}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
-    <p>Required Service: ${requiredService}</p>
+    <p>Required Service: ${service}</p>
     `
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_CLEARANCE,
+        subject:'Clearness Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_WAEL,
+        subject:'Clearness Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_ADEL,
+        subject:'Clearness Quote',
+        html
+    })
+    await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_MESSAGES_MAHMOUD,
         subject:'Clearness Quote',
         html
     })
