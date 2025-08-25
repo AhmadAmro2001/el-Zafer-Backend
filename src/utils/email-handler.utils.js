@@ -32,7 +32,7 @@ export const clearanceQuoteSchema = z.object({
     portOfDestination: z.string().min(3, "Port of destination must be at least 3 characters long"),
     typeOfCargo: z.string().min(3, "Type of cargo must be at least 3 characters long"),
     emailOrPhone: z.string().min(3, "Email or phone must be at least 3 characters long"),
-    requiredService: z.string().min(3, "Required service must be at least 3 characters long"),
+   
 });
 
 
