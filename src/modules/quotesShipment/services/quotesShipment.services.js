@@ -84,12 +84,14 @@ export const addQuoteForExport = async(req,res)=>{
 // for clearness quotes
 export const addQuoteForClearness = async(req,res)=>{
     const {portOfDestination , typeOfCargo , emailOrPhone,requiredService} = req.body;
+    const service = requiredService.join(' , ');
     const data = quotesClearnessModel.build({
         portOfDestination,
         typeOfCargo,
         emailOrPhone,
-        requiredService
+        requiredService:service
     });
+    
     const validate = clearanceQuoteSchema.safeParse(req.body);
     if(!validate.success){
         return res.status(400).json({message:'Invalid data',validate})
