@@ -36,12 +36,23 @@ export const clearanceQuoteSchema = z.object({
 });
 
 
+// export const transporter = nodemailer.createTransport({
+//     host: process.env.SMTP_HOST,
+//     port: Number(process.env.SMTP_PORT),
+//     secure: false,
+//     auth: {
+//         user: process.env.SMTP_USER,
+//         pass: process.env.SMTP_PASS
+//     },
+//     tls: { ciphers: "TLSv1.2" } 
+// });
+
 export const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: Number(process.env.SMTP_PORT || 465) === 465,
+    host: process.env.SMTP_HOST,                
+    port: Number(process.env.SMTP_PORT || 465),  
+    secure: Number(process.env.SMTP_PORT || 465) === 465, 
     auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
+        user: process.env.SMTP_USER,            
+        pass: process.env.SMTP_PASS             
     }
 });

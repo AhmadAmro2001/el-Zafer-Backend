@@ -28,33 +28,26 @@ export const addQuoteForImport = async(req,res)=>{
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_IMPORT_1,
+        cc:[
+            process.env.SMTP_MESSAGES_WAEL,
+            process.env.SMTP_MESSAGES_ADEL,
+            process.env.SMTP_MESSAGES_MAHMOUD
+        ],
         subject:'Import Quote',
         html
     })
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_IMPORT_2,
+        cc:[
+            process.env.SMTP_MESSAGES_WAEL,
+            process.env.SMTP_MESSAGES_ADEL,
+            process.env.SMTP_MESSAGES_MAHMOUD
+        ],
         subject:'Import Quote',
         html
     })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_WAEL,
-        subject:'Import Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_ADEL,
-        subject:'Import Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_MAHMOUD,
-        subject:'Import Quote',
-        html
-    })
+    
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
@@ -86,30 +79,22 @@ export const addQuoteForExport = async(req,res)=>{
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_EXPORT_1,
+        cc:[
+            process.env.SMTP_MESSAGES_WAEL,
+            process.env.SMTP_MESSAGES_ADEL,
+            process.env.SMTP_MESSAGES_MAHMOUD
+        ],
         subject:'Export Quote',
         html
     })
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_EXPORT_2,
-        subject:'Export Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_WAEL,
-        subject:'Export Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_ADEL,
-        subject:'Export Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_MAHMOUD,
+        cc:[
+            process.env.SMTP_MESSAGES_WAEL,
+            process.env.SMTP_MESSAGES_ADEL,
+            process.env.SMTP_MESSAGES_MAHMOUD
+        ],
         subject:'Export Quote',
         html
     })
@@ -142,27 +127,15 @@ export const addQuoteForClearness = async(req,res)=>{
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_CLEARANCE,
+        cc:[
+            process.env.SMTP_MESSAGES_WAEL,
+            process.env.SMTP_MESSAGES_ADEL,
+            process.env.SMTP_MESSAGES_MAHMOUD
+        ],
         subject:'Clearness Quote',
         html
     })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_WAEL,
-        subject:'Clearness Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_ADEL,
-        subject:'Clearness Quote',
-        html
-    })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_MAHMOUD,
-        subject:'Clearness Quote',
-        html
-    })
+    
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }   
