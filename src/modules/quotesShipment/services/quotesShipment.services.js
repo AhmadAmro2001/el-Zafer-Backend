@@ -3,7 +3,7 @@ import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, transporter
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{
-    const {portOfLoading , portOfDischarge , termsAndCondition , numberOfPcs , expectedRate , emailOrPhone} = req.body;
+    const {portOfLoading , portOfDischarge , termsAndCondition , numberOfPcs , expectedRate , emailOrPhone , emailTo} = req.body;
     const data = importQuotesModel.build({
         portOfLoading,
         portOfDischarge,
@@ -25,36 +25,70 @@ export const addQuoteForImport = async(req,res)=>{
     <p>Expected Rate: ${expectedRate}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_IMPORT_1,
-        cc:[
-            process.env.SMTP_MESSAGES_WAEL,
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_MAHMOUD
-        ],
-        subject:'Import Quote',
+    if(portOfDischarge.toLowerCase() === 'dammam'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'gamerteacher12@gmail.com',
+            //  process.env.SMTP_IMPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
+            html
+        })
+    }
+    if(portOfDischarge.toLowerCase() === 'riyadh'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'a7ma.3mr.2020@gmail.com',
+            //  process.env.SMTP_IMPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
+            html
+        })
+    }
+    if(emailTo.toLowerCase() === 'option1'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'gamerteacher12@gmail.com',
+            //  process.env.SMTP_IMPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
+            html
+        })
+    }
+
+    if(emailTo.toLowerCase() === 'option2'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: 'a7ma.3mr.2020@gmail.com',
+            // process.env.SMTP_IMPORT_2,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
         html
     })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_IMPORT_2,
-        cc:[
-            process.env.SMTP_MESSAGES_WAEL,
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_MAHMOUD
-        ],
-        subject:'Import Quote',
-        html
-    })
-    
+    }    
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
 
 // for export quotes
 export const addQuoteForExport = async(req,res)=>{
-    const {portOfLoading , portOfDischarge , numberOfContainers , numberOfPcs , expectedRate , emailOrPhone} = req.body;
+    const {portOfLoading , portOfDischarge , numberOfContainers , numberOfPcs , expectedRate , emailOrPhone ,emailTo} = req.body;
     const data = exportQuotesModel.build({
         portOfLoading,
         portOfDischarge,
@@ -76,29 +110,62 @@ export const addQuoteForExport = async(req,res)=>{
     <p>Expected Rate: ${expectedRate}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_EXPORT_1,
-        cc:[
-            process.env.SMTP_MESSAGES_WAEL,
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_MAHMOUD
-        ],
+    if(portOfLoading.toLowerCase() === 'dammam'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'gamerteacher12@gmail.com',
+            //  process.env.SMTP_IMPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
+            html
+        })
+    }
+    if(portOfLoading.toLowerCase() === 'riyadh'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'a7ma.3mr.2020@gmail.com',
+            //  process.env.SMTP_IMPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Import Quote',
+            html
+        })
+    }
+    if(emailTo.toLowerCase() === 'option1'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'gamerteacher12@gmail.com',
+            // to: process.env.SMTP_EXPORT_1,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
+            subject:'Export Quote',
+            html
+        })
+    }
+    if(emailTo.toLowerCase() === 'option2'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:'a7ma.3mr.2020@gmail.com',
+            // to: process.env.SMTP_EXPORT_2,
+            // cc:[
+            //     process.env.SMTP_MESSAGES_WAEL,
+            //     process.env.SMTP_MESSAGES_ADEL,
+            //     process.env.SMTP_MESSAGES_MAHMOUD
+            // ],
         subject:'Export Quote',
         html
     })
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_EXPORT_2,
-        cc:[
-            process.env.SMTP_MESSAGES_WAEL,
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_MAHMOUD
-        ],
-        subject:'Export Quote',
-        html
-    })
-    await data.save();
+    }    await data.save();
     return res.status(201).json({message:'Quote added successfully',data})    
 }
 

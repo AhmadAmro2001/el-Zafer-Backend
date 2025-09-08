@@ -59,10 +59,11 @@ export const trackingClearanceByBillNoService = async(req,res)=>{
 export const trackingClearanceByContainerNoService = async(req,res)=>{
     const {ContainerNumber , PortOfDischarge, VesselEnName}= req.query;
     const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone FROM vw_TrackingClearanceAndTrackingbyContainerNo WHERE ContainerNumber = '${ContainerNumber}' AND PortOfDischarge = '${PortOfDischarge}' AND VesselEnName = '${VesselEnName}'`);
+    // const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingClearanceAndTrackingbyContainerNo `)
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
-    const result = data[0][0];
+    const result = data[0];
     return res.status(200).json({message:'Data found',result})
 }
 

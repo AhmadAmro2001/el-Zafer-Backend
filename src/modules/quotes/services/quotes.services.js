@@ -35,6 +35,12 @@ export const getQuote = async(req,res)=>{
         subject:'New Message Added',
         html
     });
+    // await transporter.sendMail({
+    //     from:`Al-Zafer Cargo<${process.env.SMTP_USER}>`,
+    //     to:'a7ma.3mr.2020@gmail.com',
+    //     subject:'New Message',
+    //     html
+    // })
     
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})
