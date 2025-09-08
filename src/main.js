@@ -7,7 +7,7 @@ import cors from 'cors';
 
 const corsOptions = {
     origin: ['https://el-zafer.vercel.app',process.env.CORS_ORIGIN,'http://localhost:5173'], 
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST','OPTIONS'],
     credentials: false,
 }
 
@@ -16,7 +16,8 @@ const corsOptions = {
 const bootstrap = async ()=>{
     const app = express();
     app.use(express.json());
-    app.use(cors(corsOptions))
+    app.use(cors(corsOptions));
+    app.options('*', cors(corsOptions));
     controllerHandler(app)
     database_connection();
    
