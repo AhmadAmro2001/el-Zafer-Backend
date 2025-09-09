@@ -25,6 +25,14 @@ export const addQuoteForImport = async(req,res)=>{
     <p>Expected Rate: ${expectedRate}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
+    const html_air = `
+    <h1>New Import Quote</h1>
+    <p>Port of Loading: ${portOfLoading}</p>
+    <p>Port of Discharge: ${portOfDischarge}</p>
+    <p>Terms and Condition: ${termsAndCondition}</p>
+    <p>Expected Rate: ${expectedRate}</p>
+    <p>Email or Phone: ${emailOrPhone}</p>
+    `
     if(portOfDischarge.toLowerCase() === 'dammam'){
         await transporter.sendMail({
             from: process.env.SMTP_USER,
@@ -34,7 +42,7 @@ export const addQuoteForImport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Import Quote',
+            subject:'Import Quote For Dammam Branch',
             html
         })
     }
@@ -47,11 +55,11 @@ export const addQuoteForImport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Import Quote',
+            subject:'Import Quote For Riyadh Branch',
             html
         })
     }
-    if(emailTo.toLowerCase() === 'import_fcl' || emailTo.toLowerCase() === 'import_lcl' || emailTo.toLowerCase() === 'import_air' && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
+    if(emailTo.toLowerCase() === 'import_fcl' && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
         await transporter.sendMail({
             from: process.env.SMTP_USER,
             to:process.env.SMTP_IMPORT_1,
@@ -60,8 +68,34 @@ export const addQuoteForImport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Import Quote',
+            subject:'Import Quote FCL',
             html
+        })
+    }
+    if( emailTo.toLowerCase() === 'import_lcl'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:process.env.SMTP_IMPORT_1,
+            cc:[
+                process.env.SMTP_MESSAGES_WAEL,
+                process.env.SMTP_MESSAGES_ADEL,
+                process.env.SMTP_MESSAGES_MAHMOUD
+            ],
+            subject:'Import Quote LCL',
+            html
+        })
+    }
+    if( emailTo.toLowerCase() === 'import_air'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:process.env.SMTP_IMPORT_1,
+            cc:[
+                process.env.SMTP_MESSAGES_WAEL,
+                process.env.SMTP_MESSAGES_ADEL,
+                process.env.SMTP_MESSAGES_MAHMOUD
+            ],
+            subject:'Import Quote Air Freight',
+            html:html_air
         })
     }
      
@@ -110,7 +144,7 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Export Quote',
+            subject:'Export Quote For Dammam Branch',
             html
         })
     }
@@ -123,11 +157,11 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Export Quote',
+            subject:'Export Quote For Riyadh Branch',
             html
         })
     }
-    if(emailTo.toLowerCase() === 'export_fcl' || emailTo.toLowerCase() === 'export_lcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
+    if(emailTo.toLowerCase() === 'export_fcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
         await transporter.sendMail({
             from: process.env.SMTP_USER,
             to:process.env.SMTP_EXPORT_1,
@@ -136,7 +170,20 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Export Quote',
+            subject:'Export Quote FCL',
+            html
+        })
+    }
+    if(emailTo.toLowerCase() === 'export_lcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to:process.env.SMTP_EXPORT_1,
+            cc:[
+                process.env.SMTP_MESSAGES_WAEL,
+                process.env.SMTP_MESSAGES_ADEL,
+                process.env.SMTP_MESSAGES_MAHMOUD
+            ],
+            subject:'Export Quote LCL',
             html
         })
     }
@@ -149,7 +196,7 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Export Quote',
+            subject:'Export Quote Air Freight',
             html:html_air
         })
     }    

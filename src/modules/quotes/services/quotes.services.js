@@ -22,25 +22,14 @@ export const getQuote = async(req,res)=>{
     <p>Phone Number: ${phoneNumber}</p>
     <p>Message: ${message}</p>
     `
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.SMTP_MESSAGES_WAEL,
-        
-        subject:'New Message Added',
-        html
-    });
+    
     await transporter.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.SMTP_MESSAGES_ADEL,
+        cc:process.env.SMTP_MESSAGES_WAEL,
         subject:'New Message Added',
         html
     });
-    // await transporter.sendMail({
-    //     from:`Al-Zafer Cargo<${process.env.SMTP_USER}>`,
-    //     to:'a7ma.3mr.2020@gmail.com',
-    //     subject:'New Message',
-    //     html
-    // })
     
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})
