@@ -143,13 +143,12 @@ export const addQuoteForExport = async(req,res)=>{
     if(emailTo.toLowerCase() === 'export_air' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
         await transporter.sendMail({
             from: process.env.SMTP_USER,
-            to:'a7ma.3mr.2020@gmail.com',
-            // to:process.env.SMTP_EXPORT_2,
-            // cc:[
-            //     process.env.SMTP_MESSAGES_WAEL,
-            //     process.env.SMTP_MESSAGES_ADEL,
-            //     process.env.SMTP_MESSAGES_MAHMOUD
-            // ],
+            to:process.env.SMTP_EXPORT_2,
+            cc:[
+                process.env.SMTP_MESSAGES_WAEL,
+                process.env.SMTP_MESSAGES_ADEL,
+                process.env.SMTP_MESSAGES_MAHMOUD
+            ],
             subject:'Export Quote',
             html:html_air
         })
