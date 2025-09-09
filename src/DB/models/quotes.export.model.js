@@ -14,7 +14,7 @@ const exportQuotesModel = sequelizeConfig.define('tbl_quotes_export',{
         },
         numberOfContainers:{
             type:DataTypes.STRING,
-            allowNull:false
+            allowNull:true
         },
         numberOfPcs:{
             type:DataTypes.STRING,

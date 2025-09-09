@@ -93,6 +93,14 @@ export const addQuoteForExport = async(req,res)=>{
     <p>Expected Rate: ${expectedRate}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
+    const html_air = `
+    <h1>New Export Quote</h1>
+    <p>Port of Loading: ${portOfLoading}</p>
+    <p>Port of Discharge: ${portOfDischarge}</p>
+    <p>Number of Pcs: ${numberOfPcs}</p>
+    <p>Expected Rate: ${expectedRate}</p>
+    <p>Email or Phone: ${emailOrPhone}</p>
+    `
     if(portOfLoading.toLowerCase() === 'dammam'){
         await transporter.sendMail({
             from: process.env.SMTP_USER,
@@ -142,7 +150,7 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Export Quote',
-            html
+            html:html_air
         })
     }    
     await data.save();

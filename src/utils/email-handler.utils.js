@@ -22,7 +22,6 @@ export const importQuoteSchema = z.object({
 export const exportQuoteSchema = z.object({
     portOfLoading: z.string().min(1, "Port of loading must be at least 3 characters long"),
     portOfDischarge: z.string().min(1, "Port of discharge must be at least 3 characters long"),
-    numberOfContainers: z.string().min(1, "Number of containers must be at least 3 characters long"),
     numberOfPcs: z.string().min(1, "Number of packages must be at least 3 characters long"),
     expectedRate: z.string().min(1, "Expected rate must be at least 3 characters long"),
     emailOrPhone: z.string().min(1, "Email or phone must be at least 3 characters long"),
