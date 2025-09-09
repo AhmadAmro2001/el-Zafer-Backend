@@ -110,7 +110,7 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Import Quote',
+            subject:'Export Quote',
             html
         })
     }
@@ -123,7 +123,7 @@ export const addQuoteForExport = async(req,res)=>{
                 process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
-            subject:'Import Quote',
+            subject:'Export Quote',
             html
         })
     }

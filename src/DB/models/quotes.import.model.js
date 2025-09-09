@@ -18,7 +18,7 @@ const importQuotesModel = sequelizeConfig.define('tbl_quotes_import',{
     },
     numberOfPcs:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     expectedRate:{
         type:DataTypes.STRING,
