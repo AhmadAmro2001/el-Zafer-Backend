@@ -76,3 +76,11 @@ export const notifyUser = async(req,res)=>{
     return res.status(200).json({message:'Notification sent successfully'})
 }
 
+// delete account
+
+export const deleteUser = async(req,res)=>{
+    const {email} = req.params;
+    await userModel.destroy({where:{email}});
+    return res.status(200).json({message:'User deleted successfully'})
+}
+

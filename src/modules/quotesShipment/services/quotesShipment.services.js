@@ -220,7 +220,7 @@ export const addQuoteForClearness = async(req,res)=>{
         return res.status(400).json({message:'Invalid data',validate})
     }
     const html = `
-    <h1>New Clearness Quote</h1>
+    <h1>New Clearance Quote</h1>
     <p>Port of Destination: ${portOfDestination}</p>
     <p>Type of Cargo: ${typeOfCargo}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
