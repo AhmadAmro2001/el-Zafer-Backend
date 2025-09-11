@@ -10,6 +10,7 @@ userAppController.post('/api/sign-in',userAppService.signInUser)
 userAppController.post('/api/sign-up',userAppService.signUpUser)
 userAppController.post('/api/log-out',userAppService.logOutUser)
 userAppController.get('/api/notify',userAppService.notifyUser)
+userAppController.delete('/api/delete-account',userAppService.deleteUser)
 
 
 export {userAppController}

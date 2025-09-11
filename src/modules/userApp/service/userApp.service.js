@@ -79,7 +79,11 @@ export const notifyUser = async(req,res)=>{
 // delete account
 
 export const deleteUser = async(req,res)=>{
-    const {email} = req.params;
+    const {email} = req.body;
+    const checkEmail = await userModel.findOne({where:{email}});
+    if(!checkEmail){
+        return res.status(400).json({message:'Email does not exist'})
+    }
     await userModel.destroy({where:{email}});
     return res.status(200).json({message:'User deleted successfully'})
 }
