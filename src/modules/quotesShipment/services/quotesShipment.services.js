@@ -20,17 +20,17 @@ export const addQuoteForImport = async(req,res)=>{
     <h1>New Import Quote</h1>
     <p>Port of Loading: ${portOfLoading}</p>
     <p>Port of Discharge: ${portOfDischarge}</p>
-    <p>Terms and Condition: ${termsAndCondition}</p>
-    <p>Number of Pcs: ${numberOfPcs}</p>
-    <p>Expected Rate: ${expectedRate}</p>
+    <p>Terms and Condition: ${termsAndCondition?termsAndCondition:'N/A'}</p>
+    <p>Number of Pcs: ${numberOfPcs?numberOfPcs:'N/A'}</p>
+    <p>Expected Rate: ${expectedRate?expectedRate:'N/A'}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     const html_air = `
     <h1>New Import Quote</h1>
     <p>Port of Loading: ${portOfLoading}</p>
     <p>Port of Discharge: ${portOfDischarge}</p>
-    <p>Terms and Condition: ${termsAndCondition}</p>
-    <p>Expected Rate: ${expectedRate}</p>
+    <p>Terms and Condition: ${termsAndCondition?termsAndCondition:'N/A'}</p>
+    <p>Expected Rate: ${expectedRate?expectedRate:'N/A'}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     if(portOfDischarge.toLowerCase() === 'dammam'){
@@ -122,17 +122,17 @@ export const addQuoteForExport = async(req,res)=>{
     <h1>New Export Quote</h1>
     <p>Port of Loading: ${portOfLoading}</p>
     <p>Port of Discharge: ${portOfDischarge}</p>
-    <p>Number of Containers: ${numberOfContainers}</p>
-    <p>Number of Pcs: ${numberOfPcs}</p>
-    <p>Expected Rate: ${expectedRate}</p>
+    <p>Number of Containers: ${numberOfContainers?numberOfContainers:"N/A"}</p>
+    <p>Number of Pcs: ${numberOfPcs?numberOfPcs:"N/A"}</p>
+    <p>Expected Rate: ${expectedRate?expectedRate:"N/A"}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     const html_air = `
     <h1>New Export Quote</h1>
     <p>Port of Loading: ${portOfLoading}</p>
     <p>Port of Discharge: ${portOfDischarge}</p>
-    <p>Number of Pcs: ${numberOfPcs}</p>
-    <p>Expected Rate: ${expectedRate}</p>
+    <p>Number of Pcs: ${numberOfPcs?numberOfPcs:"N/A"}</p>
+    <p>Expected Rate: ${expectedRate?expectedRate:"N/A"}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     if(portOfLoading.toLowerCase() === 'dammam'){
