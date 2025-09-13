@@ -18,11 +18,11 @@ const exportQuotesModel = sequelizeConfig.define('tbl_quotes_export',{
         },
         numberOfPcs:{
             type:DataTypes.STRING,
-            allowNull:false
+            allowNull:true
         },
         expectedRate:{
             type:DataTypes.STRING,
-            allowNull:false
+            allowNull:true
         },
         emailOrPhone:{
             type:DataTypes.STRING,
