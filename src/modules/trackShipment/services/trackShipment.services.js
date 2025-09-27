@@ -4,7 +4,7 @@ import { mssqlSequelize } from "../../../DB/connection.js";
 // tracking full container 
 export const trackingFullContainerService = async (req,res)=>{
     const {BillNumber, ContainerNumber,PortOfLoading,PortOfDischarge} = req.query;
-    const data = await mssqlSequelize.query(`SELECT ArrivalDate,DepartureDate,PortOfLoading FROM vw_trackingFullContainer WHERE BillNumber = '${BillNumber}' AND ContainerNumber = '${ContainerNumber}' AND PortOfLoading = '${PortOfLoading}' AND PortOfDischarge = '${PortOfDischarge}'`) ;
+    const data = await mssqlSequelize.query(`SELECT ArrivalDate,DepartureDate FROM vw_trackingFullContainer WHERE BillNumber = '${BillNumber}' AND ContainerNumber = '${ContainerNumber}' AND PortOfLoading = '${PortOfLoading}' AND PortOfDischarge = '${PortOfDischarge}'`) ;
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
@@ -78,4 +78,10 @@ export const trackingAirFlightService = async(req,res)=>{
     const result = data[0];
     return res.status(200).json({message:'Data found',result})
 }
+
+// export const testService = async(req,res)=>{
+//     const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE HousBillNo = 'JEA/DMM/MFL087281' AND NOOfPcs = '8' AND TotalWeight = '2192' AND Destination = 'DAMMAM' `);
+
+//     return res.status(200).json({message:'Data found',data})
+// }
     
