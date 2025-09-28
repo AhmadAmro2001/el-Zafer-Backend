@@ -17,11 +17,15 @@ export const verifySmtp = async (req, res) => {
   
   // 2) Raw TCP reachability (host/port firewalls)
   
-  export const testSmtp = (req, res) => {
+  export const testSmtp = (req, res) => (req, res) => {
+    const host = (req.query.host || process.env.SMTP_HOST);
+    const port = Number(req.query.port || process.env.SMTP_PORT || 587);
+  
     const socket = new net.Socket();
     socket.setTimeout(5000);
-    socket.once('error', err => res.status(500).json({ ok: false, error: String(err) }));
-    socket.once('timeout', () => { socket.destroy(); res.status(500).json({ ok: false, error: 'connect timeout' }); });
-    socket.connect(PORT, HOST, () => { socket.destroy(); res.json({ ok: true, host: HOST, port: PORT }); });
-  };
+  
+    socket.once('error', err => res.status(500).json({ ok: false, host, port, error: String(err) }));
+    socket.once('timeout', () => { socket.destroy(); res.status(500).json({ ok: false, host, port, error: 'connect timeout' }); });
+    socket.connect(port, host, () => { socket.destroy(); res.json({ ok: true, host, port }); });
+  }
   
