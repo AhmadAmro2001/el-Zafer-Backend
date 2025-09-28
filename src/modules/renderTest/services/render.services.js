@@ -17,15 +17,46 @@ export const verifySmtp = async (req, res) => {
   
   // 2) Raw TCP reachability (host/port firewalls)
   
-  export const testSmtp = (req, res) => (req, res) => {
-    const host = (req.query.host || process.env.SMTP_HOST);
+  export const testSmtp = (req, res) => {
+    const rawHost = (req.query.host || process.env.SMTP_HOST || '').toString();
+    const host = decodeURIComponent(rawHost).trim();
     const port = Number(req.query.port || process.env.SMTP_PORT || 587);
   
-    const socket = new net.Socket();
-    socket.setTimeout(5000);
+    // Basic validation
+    if (!host || !Number.isInteger(port) || port <= 0) {
+      return res.status(400).json({ ok: false, error: 'Invalid host or port', host, port });
+    }
+    // (optional) simple host sanity check
+    if (!/^[A-Za-z0-9.\-]+$/.test(host)) {
+      return res.status(400).json({ ok: false, error: 'Host contains invalid characters', host });
+    }
   
-    socket.once('error', err => res.status(500).json({ ok: false, host, port, error: String(err) }));
-    socket.once('timeout', () => { socket.destroy(); res.status(500).json({ ok: false, host, port, error: 'connect timeout' }); });
-    socket.connect(port, host, () => { socket.destroy(); res.json({ ok: true, host, port }); });
-  }
+    const socket = new net.Socket();
+    let replied = false;
+    const reply = (status, body) => {
+      if (replied) return;
+      replied = true;
+      try { socket.destroy(); } catch {}
+      res.status(status).json(body);
+    };
+  
+    socket.setNoDelay(true);
+    socket.setTimeout(5000); // 5s connect timeout
+  
+    socket.once('connect', () => {
+      reply(200, { ok: true, host, port });
+    });
+  
+    socket.once('timeout', () => {
+      reply(504, { ok: false, host, port, error: 'connect timeout' });
+    });
+  
+    socket.once('error', (err) => {
+      // Common codes: ECONNREFUSED (port closed), ENOTFOUND (DNS), EHOSTUNREACH, ETIMEDOUT
+      reply(502, { ok: false, host, port, error: err.code || String(err) });
+    });
+  
+    // Start connect
+    socket.connect({ host, port });
+  };
   
