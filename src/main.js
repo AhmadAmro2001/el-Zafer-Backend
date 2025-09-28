@@ -4,6 +4,7 @@ config();
 import { database_connection } from './DB/connection.js';
 import controllerHandler from './utils/router-handler.utils.js';
 import cors from 'cors';
+import dns from 'node:dns';
 
 
 
@@ -42,6 +43,8 @@ const bootstrap = async ()=>{
     app.options('*', cors(corsOptions));
     controllerHandler(app)
     database_connection();
+    dns.setDefaultResultOrder('ipv4first');  // force IPv4 first
+
    
     app.listen(process.env.PORT,()=>console.log(`Server is running on port ${process.env.PORT}`))
     // return app;
