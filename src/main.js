@@ -5,7 +5,7 @@ import { database_connection } from './DB/connection.js';
 import controllerHandler from './utils/router-handler.utils.js';
 import cors from 'cors';
 
-import cors from 'cors';
+
 
 const allowedOrigins = [
   'https://el-zafer.vercel.app',
