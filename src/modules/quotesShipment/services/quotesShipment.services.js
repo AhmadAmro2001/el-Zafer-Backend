@@ -228,7 +228,7 @@ export const addQuoteForClearness = async(req,res)=>{
             process.env.SMTP_MESSAGES_ADEL,
             process.env.SMTP_MESSAGES_MAHMOUD
         ],
-        subject:'Custom Clearance Quote',
+        subject:'Customs Clearance Quote',
         html
     })
     

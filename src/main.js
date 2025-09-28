@@ -5,12 +5,33 @@ import { database_connection } from './DB/connection.js';
 import controllerHandler from './utils/router-handler.utils.js';
 import cors from 'cors';
 
+import cors from 'cors';
+
+const allowedOrigins = [
+  'https://el-zafer.vercel.app',
+  'http://localhost:5173',
+  process.env.CORS_ORIGIN, // ok if undefined
+];
+
+// optional: allow vercel preview subdomains too
+const vercelPreview = /^https:\/\/el-zafer(-[\w-]+)?\.vercel\.app$/;
+
 const corsOptions = {
-    origin: ['https://el-zafer.vercel.app',process.env.CORS_ORIGIN,'http://localhost:5173'], 
-    methods: ['GET', 'POST','OPTIONS'],
-    exposedHeaders: ['Content-Type', 'Authorization'],
-    credentials: false,
-}
+  origin(origin, cb) {
+    // allow non-browser tools (no Origin header)
+    if (!origin) return cb(null, true);
+    const ok =
+      allowedOrigins.filter(Boolean).includes(origin) ||
+      vercelPreview.test(origin);
+    return ok ? cb(null, true) : cb(new Error(`CORS not allowed: ${origin}`));
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'], // <-- fix
+  credentials: false,
+  optionsSuccessStatus: 204,
+};
+
+ // ensure preflight responds
 
 
 
