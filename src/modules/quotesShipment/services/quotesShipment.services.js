@@ -65,7 +65,6 @@ export const addQuoteForImport = async(req,res)=>{
             to:process.env.SMTP_IMPORT_1,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Import Quote FCL',
@@ -78,7 +77,6 @@ export const addQuoteForImport = async(req,res)=>{
             to:process.env.SMTP_IMPORT_1,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Import Quote LCL',
@@ -91,7 +89,6 @@ export const addQuoteForImport = async(req,res)=>{
             to:process.env.SMTP_IMPORT_1,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Import Quote Air Freight',
@@ -167,7 +164,6 @@ export const addQuoteForExport = async(req,res)=>{
             to:process.env.SMTP_EXPORT_1,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Export Quote FCL',
@@ -180,7 +176,6 @@ export const addQuoteForExport = async(req,res)=>{
             to:process.env.SMTP_EXPORT_1,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Export Quote LCL',
@@ -193,7 +188,6 @@ export const addQuoteForExport = async(req,res)=>{
             to:process.env.SMTP_EXPORT_2,
             cc:[
                 process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
                 process.env.SMTP_MESSAGES_MAHMOUD
             ],
             subject:'Export Quote Air Freight',
