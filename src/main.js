@@ -8,6 +8,7 @@ import cors from 'cors';
 const corsOptions = {
     origin: ['https://el-zafer.vercel.app',process.env.CORS_ORIGIN,'http://localhost:5173'], 
     methods: ['GET', 'POST','OPTIONS'],
+    exposedHeaders: ['Content-Type', 'Authorization'],
     credentials: false,
 }
 
