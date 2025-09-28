@@ -1,7 +1,7 @@
 // 1) Nodemailer handshake
 
 import net from 'node:net';
-import { transporter } from '../../../utils/email-handler.utils';
+import { transporter } from '../../../utils/email-handler.utils.js';
 
 
 
