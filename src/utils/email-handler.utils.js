@@ -59,3 +59,25 @@ export const transporter = nodemailer.createTransport({
 //         pass: process.env.SMTP_PASS             
 //     }
 // });
+
+
+
+// send grid
+
+import sg from '@sendgrid/mail';
+sg.setApiKey(process.env.RESEND_KEY);
+
+export async function sendMail({ to, cc = [], subject, html }) {
+  if (!process.env.RESEND_KEY) throw new Error('RESEND_KEY missing');
+  if (!process.env.SMTP_USER) throw new Error('SMTP_USER missing');
+
+  const msg = {
+    from: process.env.SMTP_USER,
+    to: Array.isArray(to) ? to : [to],
+    cc: cc.filter(Boolean),
+    subject,
+    html,
+  };
+  const [resp] = await sg.send(msg);   // 202 expected
+  return { status: resp.statusCode };
+}

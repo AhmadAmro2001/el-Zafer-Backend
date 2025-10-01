@@ -1,5 +1,5 @@
 import { quotesModel} from "../../../DB/models/index.js";
-import { messageSchema , transporter} from "../../../utils/email-handler.utils.js";
+import { messageSchema , sendMail, transporter} from "../../../utils/email-handler.utils.js";
 
 // getting quote
 export const getQuote = async(req,res)=>{
@@ -23,16 +23,22 @@ export const getQuote = async(req,res)=>{
     <p>Message: ${message}</p>
     `
     
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to:"a7ma.3mr.2020@gmail.com",
-        // cc:[
-        //     process.env.SMTP_MESSAGES_ADEL,
-        //     process.env.SMTP_MESSAGES_WAEL
-        // ],
-        subject:'New Message Added',
-        html
-    });
+    // await transporter.sendMail({
+    //     from: process.env.SMTP_USER,
+    //     to:"a7ma.3mr.2020@gmail.com",
+    //     // cc:[
+    //     //     process.env.SMTP_MESSAGES_ADEL,
+    //     //     process.env.SMTP_MESSAGES_WAEL
+    //     // ],
+    //     subject:'New Message Added',
+    //     html
+    // });
+    await sendMail({
+        to: process.env.SMTP_USER,
+        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL].filter(Boolean),
+        subject: 'New Message Added',
+        html,
+      });
     
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})
