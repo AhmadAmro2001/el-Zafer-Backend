@@ -25,11 +25,11 @@ export const getQuote = async(req,res)=>{
     
     await transporter.sendMail({
         from: process.env.SMTP_USER,
-        to:process.env.SMTP_USER,
-        cc:[
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_WAEL
-        ],
+        to:"a7ma.3mr.2020@gmail.com",
+        // cc:[
+        //     process.env.SMTP_MESSAGES_ADEL,
+        //     process.env.SMTP_MESSAGES_WAEL
+        // ],
         subject:'New Message Added',
         html
     });
