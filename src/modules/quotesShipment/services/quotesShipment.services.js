@@ -1,5 +1,5 @@
 import { exportQuotesModel, importQuotesModel, quotesClearnessModel } from "../../../DB/models/index.js";
-import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, transporter } from "../../../utils/email-handler.utils.js";
+import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, sendMail, transporter } from "../../../utils/email-handler.utils.js";
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{
@@ -34,68 +34,43 @@ export const addQuoteForImport = async(req,res)=>{
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     if(portOfDischarge.toLowerCase() === 'dammam'){
-         transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_DAMMAM,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Import Quote For Dammam Branch',
+         await sendMail({
+            to: process.env.SMTP_DAMMAM,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Import Quote For Dammam Branch',
             html
         })
     }
     if(portOfDischarge?.toLowerCase() === 'riyadh'){
-         transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_RIHADH,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Import Quote For Riyadh Branch',
+        await sendMail({
+            to: process.env.SMTP_RIYADH,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Import Quote For Riyadh Branch',
             html
         })
     }
     if(emailTo?.toLowerCase() === 'import_fcl' && portOfDischarge?.toLowerCase() !== 'dammam' && portOfDischarge?.toLowerCase() !== 'riyadh'){
-         transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_IMPORT_1,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Import Quote FCL',
+        await sendMail({
+            to: process.env.SMTP_IMPORT_1,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Import Quote FCL',
             html
         })
     }
     if( emailTo.toLowerCase() === 'import_lcl'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
-         transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_IMPORT_1,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Import Quote LCL',
+        await sendMail({
+            to: process.env.SMTP_IMPORT_1,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Import Quote LCL',
             html
         })
     }
     if( emailTo.toLowerCase() === 'import_air'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
-        transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_IMPORT_1,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Import Quote Air Freight',
-            html:html_air
+        await sendMail({
+            to: process.env.SMTP_IMPORT_1,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Import Quote Air Freight',
+            html
         })
     }
      
@@ -138,65 +113,43 @@ export const addQuoteForExport = async(req,res)=>{
     <p>Email or Phone: ${emailOrPhone}</p>
     `
     if(portOfLoading.toLowerCase() === 'dammam'){
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_DAMMAM,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Export Quote For Dammam Branch',
+        await sendMail({
+            to: process.env.SMTP_DAMMAM,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Export Quote For Dammam Branch',
             html
         })
     }
     if(portOfLoading.toLowerCase() === 'riyadh'){
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_RIHADH,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_ADEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Export Quote For Riyadh Branch',
+        await sendMail({
+            to: process.env.SMTP_RIHADH,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Export Quote For Riyadh Branch',
             html
         })
     }
     if(emailTo.toLowerCase() === 'export_fcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_EXPORT_1,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Export Quote FCL',
+        await sendMail({
+            to: process.env.SMTP_EXPORT_1,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Export Quote FCL',
             html
         })
     }
     if(emailTo.toLowerCase() === 'export_lcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_EXPORT_1,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Export Quote LCL',
+        await sendMail({
+            to: process.env.SMTP_EXPORT_1,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Export Quote LCL',
             html
         })
     }
     if(emailTo.toLowerCase() === 'export_air' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to:process.env.SMTP_EXPORT_2,
-            cc:[
-                process.env.SMTP_MESSAGES_WAEL,
-                process.env.SMTP_MESSAGES_MAHMOUD
-            ],
-            subject:'Export Quote Air Freight',
-            html:html_air
+        await sendMail({
+            to: process.env.SMTP_EXPORT_2,
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            subject: 'Export Quote Air Freight',
+            html
         })
     }    
     await data.save();
@@ -225,15 +178,10 @@ export const addQuoteForClearness = async(req,res)=>{
     <p>Email or Phone: ${emailOrPhone}</p>
     <p>Required Service: ${service}</p>
     `
-    await transporter.sendMail({
-        from: process.env.SMTP_USER,
+    await sendMail({
         to: process.env.SMTP_CLEARANCE,
-        cc:[
-            process.env.SMTP_MESSAGES_WAEL,
-            process.env.SMTP_MESSAGES_ADEL,
-            process.env.SMTP_MESSAGES_MAHMOUD
-        ],
-        subject:'Customs Clearance Quote',
+        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+        subject: 'Customs Clearance Quote',
         html
     })
     
