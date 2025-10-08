@@ -1,5 +1,5 @@
 import { exportQuotesModel, importQuotesModel, quotesClearnessModel } from "../../../DB/models/index.js";
-import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, sendMail, transporter } from "../../../utils/email-handler.utils.js";
+import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, sendMail } from "../../../utils/email-handler.utils.js";
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{

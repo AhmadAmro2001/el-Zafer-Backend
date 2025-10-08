@@ -12,8 +12,11 @@ const corsOptions = {
   origin: [
     'https://el-zafer.vercel.app',
     process.env.CORS_ORIGIN,
+    "https://alzafercargo.com",             // your main domain
+    "https://www.alzafercargo.com", 
     'http://localhost:5173'],
   methods: ['GET', 'POST','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Type', 'Authorization'],
   credentials: false, }
 
@@ -28,7 +31,7 @@ const bootstrap = async ()=>{
     app.options('*', cors(corsOptions));
     controllerHandler(app)
     database_connection();
-     // force IPv4 first
+    
 
    
     app.listen(process.env.PORT,()=>console.log(`Server is running on port ${process.env.PORT}`))

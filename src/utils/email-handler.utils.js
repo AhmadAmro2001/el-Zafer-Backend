@@ -33,22 +33,22 @@ const PORT = Number(process.env.SMTP_PORT || 587);
 const HOST = process.env.SMTP_HOST;
 
 
-export const transporter = nodemailer.createTransport({
-    host: HOST,
-    port: PORT,
-    secure: PORT === 465,
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-    },
-    // requireTLS: PORT === 587,
-    // connectionTimeout: 10000,       // 10s connect timeout
-    // greetingTimeout: 10000,         // wait for 220 banner
-    // socketTimeout: 15000, 
-    tls: { ciphers: "TLSv1.2" ,servername: HOST} ,
-    logger: true,
-    debug: true
-});
+// export const transporter = nodemailer.createTransport({
+//     host: HOST,
+//     port: PORT,
+//     secure: PORT === 465,
+//     auth: {
+//         user: process.env.SMTP_USER,
+//         pass: process.env.SMTP_PASS
+//     },
+//     // requireTLS: PORT === 587,
+//     // connectionTimeout: 10000,       // 10s connect timeout
+//     // greetingTimeout: 10000,         // wait for 220 banner
+//     // socketTimeout: 15000, 
+//     tls: { ciphers: "TLSv1.2" ,servername: HOST} ,
+//     logger: true,
+//     debug: true
+// });
 
 // export const transporter = nodemailer.createTransport({
 //     host: process.env.SMTP_HOST,                

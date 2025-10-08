@@ -5,7 +5,7 @@ import trackShipmentController from "../modules/trackShipment/trackShipment.cont
 import helmet from "helmet"
 import {rateLimit} from "express-rate-limit"
 import { userAppController } from "../modules/userApp/userApp.controller.js"
-import renderController from "../modules/renderTest/render.controller.js"
+
 
 
 
@@ -26,7 +26,7 @@ const controllerHandler = (app)=>{
     app.use('/track-shipment',trackShipmentController)
 
     // testing render
-    app.use('/render',renderController)
+    
     
     app.get('/',async (req, res) => res.status(200).json({ message: 'Welcome to El Zafer API' }))
     app.use((req, res) => {

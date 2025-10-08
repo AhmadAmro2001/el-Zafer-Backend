@@ -1,5 +1,5 @@
 import { quotesModel} from "../../../DB/models/index.js";
-import { messageSchema , sendMail, transporter} from "../../../utils/email-handler.utils.js";
+import { messageSchema , sendMail} from "../../../utils/email-handler.utils.js";
 
 // getting quote
 export const getQuote = async(req,res)=>{
