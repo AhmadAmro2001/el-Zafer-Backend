@@ -1,5 +1,5 @@
 import { quotesModel} from "../../../DB/models/index.js";
-import { messageSchema , sendMail} from "../../../utils/email-handler.utils.js";
+import { messageSchema ,  sendSimpleEmail   } from "../../../utils/email-handler.utils.js";
 
 // getting quote
 export const getQuote = async(req,res)=>{
@@ -33,12 +33,18 @@ export const getQuote = async(req,res)=>{
     //     subject:'New Message Added',
     //     html
     // });
-    await sendMail({
-        to: process.env.SMTP_USER,
-        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL].filter(Boolean),
-        subject: 'New Message Added',
-        html,
-      });
+    // await sendMail({
+    //     to: process.env.SMTP_USER,
+    //     cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL].filter(Boolean),
+    //     subject: 'New Message Added',
+    //     html,
+    //   });
+    await sendSimpleEmail({
+        to: "gamerteacher12@gmail.com",
+        subject: "Test email from SMTP2GO",
+        text: "Hello Ahmad! This is a test email.",
+        html: "<b>Hello Ahmad!</b> This is a test email."
+    })
     
     await data.save();
     return res.status(201).json({message:'Quote added successfully',data})

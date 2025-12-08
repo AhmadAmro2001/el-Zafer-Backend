@@ -1,5 +1,6 @@
 import z from "zod";
 import nodemailer from "nodemailer";
+import axios from 'axios';
 
 
 
@@ -80,4 +81,30 @@ export async function sendMail({ to, cc = [], subject, html }) {
   };
   const [resp] = await sg.send(msg);   // 202 expected
   return { status: resp.statusCode };
+}
+
+// add CNAME of the domain don't forget
+// smtp2go
+
+const SMTP2GO_API_URL = 'https://api.smtp2go.com/v3/email/send';
+const SMTP2GO_API_KEY = 'api-FEBE6A79EDBD49AAA60741AE57B357FA'; // put your api-xxxx here
+
+
+export async function sendSimpleEmail({ to, html, text,subject }) {
+  const payload = {
+    sender: 'Al-Zafer <web-inquiry@alzafercargo.com>', // must be a verified sender
+    to: [to],
+    subject: subject,
+    html_body: html,
+    text_body: text,
+  };
+
+  const { data } = await axios.post(SMTP2GO_API_URL, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Smtp2go-Api-Key': SMTP2GO_API_KEY,
+    },
+  });
+
+  return data; // contains succeeded/failed + email_id, like SendGrid's response
 }
