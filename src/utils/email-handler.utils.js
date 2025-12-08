@@ -90,14 +90,17 @@ const SMTP2GO_API_URL = 'https://api.smtp2go.com/v3/email/send';
 const SMTP2GO_API_KEY = 'api-FEBE6A79EDBD49AAA60741AE57B357FA'; // put your api-xxxx here
 
 
-export async function sendSimpleEmail({ to, html, text,subject }) {
+export async function sendSimpleEmail({ to, cc ,html,subject }) {
   const payload = {
     sender: 'Al-Zafer <web-inquiry@alzafercargo.com>', // must be a verified sender
     to: [to],
     subject: subject,
     html_body: html,
-    text_body: text,
+    // text_body: text,
   };
+  if (cc) {
+    payload.cc = Array.isArray(cc) ? cc : [cc];
+  }
 
   const { data } = await axios.post(SMTP2GO_API_URL, payload, {
     headers: {

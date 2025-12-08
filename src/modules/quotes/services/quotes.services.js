@@ -40,10 +40,11 @@ export const getQuote = async(req,res)=>{
     //     html,
     //   });
     await sendSimpleEmail({
-        to: "gamerteacher12@gmail.com",
-        subject: "Test email from SMTP2GO",
-        text: "Hello Ahmad! This is a test email.",
-        html: "<b>Hello Ahmad!</b> This is a test email."
+        to: process.env.SMTP_USER,
+        subject: "New Message Added",
+        // text: "Hello Ahmad! This is a test email.",
+        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL].filter(Boolean),
+        html
     })
     
     await data.save();
