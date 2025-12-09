@@ -86,8 +86,7 @@ const HOST = process.env.SMTP_HOST;
 // add CNAME of the domain don't forget
 // smtp2go
 
-const SMTP2GO_API_URL = 'https://api.smtp2go.com/v3/email/send';
-const SMTP2GO_API_KEY = 'api-FEBE6A79EDBD49AAA60741AE57B357FA'; // put your api-xxxx here
+
 
 
 export async function sendSimpleEmail({ to, cc ,html,subject }) {
@@ -102,10 +101,10 @@ export async function sendSimpleEmail({ to, cc ,html,subject }) {
     payload.cc = Array.isArray(cc) ? cc : [cc];
   }
 
-  const { data } = await axios.post(SMTP2GO_API_URL, payload, {
+  const { data } = await axios.post(process.env.SMTP2GO_API_URL, payload, {
     headers: {
       'Content-Type': 'application/json',
-      'X-Smtp2go-Api-Key': SMTP2GO_API_KEY,
+      'X-Smtp2go-Api-Key': process.env.SMTP2GO_API_KEY,
     },
   });
 
