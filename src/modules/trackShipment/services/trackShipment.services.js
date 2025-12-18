@@ -9,8 +9,14 @@ export const trackingFullContainerService = async (req,res)=>{
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
+    let exportImport;
+    if(PortOfLoading.toLowerCase() === 'jeddah' ||PortOfLoading.toLowerCase() === 'dammam'||PortOfLoading.toLowerCase() === 'riyadh' ){
+        exportImport = 'export';
+    }else{
+        exportImport = 'import';
+    }
     const result = data[0];
-    return res.status(200).json({message:'Data found',result})
+    return res.status(200).json({message:'Data found',result,exportImport})
 }
 
 // tracking lcl by container
@@ -81,8 +87,14 @@ export const trackingAirFlightService = async(req,res)=>{
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
+    let exportImport;
+    if(Destination.toLowerCase() === 'jeddah' ||Destination.toLowerCase() === 'dammam'||Destination.toLowerCase() === 'riyadh' ){
+        exportImport = 'import';
+    }else{
+        exportImport = 'export';
+    }
     const result = data[0];
-    return res.status(200).json({message:'Data found',result})
+    return res.status(200).json({message:'Data found',result,exportImport})
 }
 
 // export const testService = async(req,res)=>{
