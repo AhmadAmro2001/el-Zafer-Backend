@@ -5,10 +5,10 @@ import axios from 'axios';
 
 
 export const messageSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 characters long"),
-    email: z.string().email("Invalid email address"),
-    phoneNumber: z.string().min(8, "Phone number must be at least 10 characters long"),
-    message: z.string().min(1, "Message must be at least 10 characters long"),
+    name: z.string().min(0, "Name must be at least 3 characters long"),
+    email: z.string().min(0,"Invalid email address"),
+    phoneNumber: z.string().min(0, "Phone number must be at least 10 characters long"),
+    message: z.string().min(0, "Message must be at least 10 characters long"),
 });
 
 export const importQuoteSchema = z.object({

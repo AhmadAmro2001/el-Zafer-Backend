@@ -12,16 +12,26 @@ export const getQuote = async(req,res)=>{
         message
     });
     const validate = messageSchema.safeParse(req.body);
-    if(!validate.success){
-        return res.status(400).json({message:'Invalid data',validate})
-    }
-    const html = `
+    let html;
+    if(email === phoneNumber){
+        html = `
+    <h1>New Message</h1>
+    <p>Email or Phone Number: ${email}</p>
+    <p>Message: ${message}</p>
+    `
+    }else{
+        html = `
     <h1>New Message</h1>
     <p>Name: ${name}</p>
     <p>Email: ${email}</p>
     <p>Phone Number: ${phoneNumber}</p>
     <p>Message: ${message}</p>
     `
+    }
+    if(!validate.success){
+        return res.status(400).json({message:'Invalid data',validate})
+    }
+    
     
     // await transporter.sendMail({
     //     from: process.env.SMTP_USER,
