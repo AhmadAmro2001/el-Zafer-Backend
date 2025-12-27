@@ -25,7 +25,12 @@ const userModel = sequelizeConfig.define('tbl_user_app',{
     phoneNumber:{
         type:DataTypes.STRING,
         allowNull:true
+    },
+    OTP:{
+            type: DataTypes.STRING,
+            allowNull:true
     }
+    
 },{
     timestamps:true,
     createdAt:'created_at'
