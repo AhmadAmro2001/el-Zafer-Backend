@@ -167,7 +167,9 @@ export const hitMobile = async (req,res)=>{
 
    test.name = toggleIos;
    test.email = toggleAnd;
+
    await test.save();
+
    return res.status(200).json({IOS:test.name , ANDRIOD:test.email})
    
 
