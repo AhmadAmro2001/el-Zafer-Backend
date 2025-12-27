@@ -3,7 +3,7 @@ import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, sendSimpleE
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{
-    const {portOfLoading , portOfDischarge , termsAndCondition , numberOfPcs , expectedRate , emailOrPhone ,emailTo } = req.body;
+    const {portOfLoading , portOfDischarge , termsAndCondition, shipperAddress , numberOfPcs , expectedRate , emailOrPhone ,emailTo } = req.body;
     const data = importQuotesModel.build({
         portOfLoading,
         portOfDischarge,
@@ -21,6 +21,7 @@ export const addQuoteForImport = async(req,res)=>{
     <p>Port of Loading: ${portOfLoading}</p>
     <p>Port of Discharge: ${portOfDischarge}</p>
     <p>Terms and Condition: ${termsAndCondition?termsAndCondition:'N/A'}</p>
+    <p>shipping address: ${shipperAddress?shipperAddress:'N/A'}</p>
     <p>Number of Pcs: ${numberOfPcs?numberOfPcs:'N/A'}</p>
     <p>Expected Rate: ${expectedRate?expectedRate:'N/A'}</p>
     <p>Email or Phone: ${emailOrPhone}</p>
