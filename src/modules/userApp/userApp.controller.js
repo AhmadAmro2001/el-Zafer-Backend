@@ -15,7 +15,7 @@ userAppController.get('/api/notify',errorHandler(userAppService.notifyUser))
 userAppController.delete('/api/delete-account',errorHandler(userAppService.deleteUser))
 userAppController.patch('/api/forgot-pass',errorHandler(userAppService.changePassword))
 userAppController.patch('/api/reset-pass',errorHandler(userAppService.resetPassword))
-userAppController.patch('/api/change-number',authenticationMiddleware(),errorHandler(userAppService.changePhone));
+userAppController.patch('/api/change-number',errorHandler(userAppService.changePhone));
 userAppController.put('/api/hit',errorHandler(userAppService.hitMobile));
 userAppController.get('/api/get',errorHandler(userAppService.getMobile));
 

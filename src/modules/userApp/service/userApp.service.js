@@ -141,11 +141,11 @@ export const resetPassword = async (req,res)=>{
 
 // changing phone number
 export const changePhone = async (req,res)=>{
-    const {id} = req.loggedInUser;
+    // const {id} = req.loggedInUser;
     const {oldPhoneNumber , newPhoneNumber} = req.body;
-    const user =  await userModel.findOne({where:id});
+    const user =  await userModel.findOne({where:{phoneNumber:oldPhoneNumber}});
     if(!user){
-        return res.status(401).json({message:"user is not logged in"});
+        return res.status(401).json({message:"this account is not available"});
     }
     if(user.phoneNumber !== oldPhoneNumber ){
         return res.status(401).json({message:"user's old phone number is not correct!"});
@@ -153,7 +153,7 @@ export const changePhone = async (req,res)=>{
 
     await userModel.update(
         {phoneNumber:newPhoneNumber},
-        {where:{id}}
+        {where:{id:user.id}}
     )
 
     return res.status(200).json({message:"phone number changed successfully"});
