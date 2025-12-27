@@ -1,4 +1,4 @@
-import { userModel, blacklistTokensModel } from "../../../DB/models/index.js";
+import { userModel, blacklistTokensModel, adminModel } from "../../../DB/models/index.js";
 import { compareSync } from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -89,7 +89,7 @@ export const deleteUser = async (req, res) => {
   await userModel.destroy({ where: { email } });
   return res.status(200).json({ message: "User deleted successfully" });
 };
-
+// forgot password
 export const changePassword = async (req, res) => {
   const { email } = req.body;
   const user = await userModel.findOne({ where: {email} });
@@ -117,7 +117,7 @@ export const changePassword = async (req, res) => {
   return res.status(200).json({ message: "otp sent successfully" });
 };
 
-
+// reseting password
 export const resetPassword = async (req,res)=>{
     const {email,otp,newPassword}=req.body;
     const checkUser = await userModel.findOne({where:{email}})
@@ -137,4 +137,46 @@ export const resetPassword = async (req,res)=>{
   );
 
   return res.status(200).json({message:"password updated successfully"});
+}
+
+// changing phone number
+export const changePhone = async (req,res)=>{
+    const {id} = req.loggedInUser;
+    const {oldPhoneNumber , newPhoneNumber} = req.body;
+    const user =  await userModel.findOne({where:id});
+    if(!user){
+        return res.status(401).json({message:"user is not logged in"});
+    }
+    if(user.phoneNumber !== oldPhoneNumber ){
+        return res.status(401).json({message:"user's old phone number is not correct!"});
+    }
+
+    await userModel.update(
+        {phoneNumber:newPhoneNumber},
+        {where:{id}}
+    )
+
+    return res.status(200).json({message:"phone number changed successfully"});
+}
+
+// hit false true
+export const hitMobile = async (req,res)=>{
+   const {toggleIos , toggleAnd} = req.body;
+
+   const test = await adminModel.findOne({where:{id:1}});
+
+   test.name = toggleIos;
+   test.email = toggleAnd;
+   await test.save();
+   return res.status(200).json({IOS:test.name , ANDRIOD:test.email})
+   
+
+   
+}
+
+export const getMobile = async (req,res)=>{
+   const test = await adminModel.findOne({where:{id:1}});
+   
+
+   return res.status(200).json({Ios:test.name , Andriod:test.email})
 }
