@@ -7,11 +7,11 @@ import { sendSimpleEmail } from "../../../utils/email-handler.utils.js";
 import { where } from "sequelize";
 
 export const signInUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { phoneNumber, password } = req.body;
   // check if the email exists
-  const checkEmail = await userModel.findOne({ where: { email } });
+  const checkEmail = await userModel.findOne({ where: { phoneNumber } });
   if (!checkEmail) {
-    return res.status(400).json({ message: "Email does not exist" });
+    return res.status(400).json({ message: "Account does not exist" });
   }
   const isMatch = compareSync(password, checkEmail.password);
   if (!isMatch) {
