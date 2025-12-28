@@ -3,7 +3,7 @@ import { clearanceQuoteSchema, exportQuoteSchema, importQuoteSchema, sendSimpleE
 
 // for import quotes
 export const addQuoteForImport = async(req,res)=>{
-    const {portOfLoading , portOfDischarge , termsAndCondition, shipperAddress , numberOfPcs , expectedRate , emailOrPhone ,emailTo } = req.body;
+    const {portOfLoading , portOfDischarge , termsAndCondition, shipperAddress , numberOfPcs , expectedRate , emailOrPhone ,emailTo ,phone } = req.body;
     const data = importQuotesModel.build({
         portOfLoading,
         portOfDischarge,
@@ -24,7 +24,8 @@ export const addQuoteForImport = async(req,res)=>{
     <p>shipper address: ${shipperAddress?shipperAddress:'N/A'}</p>
     <p>Number of Pcs: ${numberOfPcs?numberOfPcs:'N/A'}</p>
     <p>Expected Rate: ${expectedRate?expectedRate:'N/A'}</p>
-    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Email: ${emailOrPhone}</p>
+    <p>phone Number: ${phone}</p>
     `
     const html_air = `
     <h1>New Import Quote</h1>
@@ -32,7 +33,8 @@ export const addQuoteForImport = async(req,res)=>{
     <p>Port of Discharge: ${portOfDischarge}</p>
     <p>Terms and Condition: ${termsAndCondition?termsAndCondition:'N/A'}</p>
     <p>Expected Rate: ${expectedRate?expectedRate:'N/A'}</p>
-    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Email: ${emailOrPhone}</p>
+    <p>phone Number: ${phone}</p>
     `
     if(portOfDischarge.toLowerCase() === 'dammam'){
          await sendSimpleEmail({
@@ -83,7 +85,7 @@ export const addQuoteForImport = async(req,res)=>{
 
 
 export const addQuoteForExport = async(req,res)=>{
-    const {portOfLoading , portOfDischarge , numberOfContainers , numberOfPcs , expectedRate , emailOrPhone ,emailTo} = req.body;
+    const {portOfLoading , portOfDischarge , numberOfContainers , numberOfPcs , expectedRate , emailOrPhone ,emailTo , phone} = req.body;
     const data = exportQuotesModel.build({
         portOfLoading,
         portOfDischarge,
@@ -103,7 +105,8 @@ export const addQuoteForExport = async(req,res)=>{
     <p>Number of Containers: ${numberOfContainers?numberOfContainers:"N/A"}</p>
     <p>Number of Pcs: ${numberOfPcs?numberOfPcs:"N/A"}</p>
     <p>Expected Rate: ${expectedRate?expectedRate:"N/A"}</p>
-    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Email: ${emailOrPhone}</p>
+    <p>phone Number: ${phone}</p>
     `
     const html_air = `
     <h1>New Export Quote</h1>
@@ -111,7 +114,8 @@ export const addQuoteForExport = async(req,res)=>{
     <p>Port of Discharge: ${portOfDischarge}</p>
     <p>Number of Pcs: ${numberOfPcs?numberOfPcs:"N/A"}</p>
     <p>Expected Rate: ${expectedRate?expectedRate:"N/A"}</p>
-    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Email: ${emailOrPhone}</p>
+    <p>phone Number: ${phone}</p>
     `
     if(portOfLoading.toLowerCase() === 'dammam'){
         await sendSimpleEmail({
@@ -159,7 +163,7 @@ export const addQuoteForExport = async(req,res)=>{
 
 // for clearness quotes
 export const addQuoteForClearness = async(req,res)=>{
-    const {portOfDestination , typeOfCargo , emailOrPhone,requiredService} = req.body;
+    const {portOfDestination , typeOfCargo , emailOrPhone,requiredService,phone} = req.body;
     const service = requiredService.join(' , ');
     const data = quotesClearnessModel.build({
         portOfDestination,
@@ -176,7 +180,8 @@ export const addQuoteForClearness = async(req,res)=>{
     <h1>New Clearance Quote</h1>
     <p>Port of Destination: ${portOfDestination}</p>
     <p>Type of Cargo: ${typeOfCargo}</p>
-    <p>Email or Phone: ${emailOrPhone}</p>
+    <p>Email: ${emailOrPhone}</p>
+    <p>phone Number: ${phone}</p>
     <p>Required Service: ${service}</p>
     `
     await sendSimpleEmail({
