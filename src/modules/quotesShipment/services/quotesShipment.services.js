@@ -38,7 +38,7 @@ export const addQuoteForImport = async(req,res)=>{
     `
     if(portOfDischarge.toLowerCase() === 'dammam'){
          await sendSimpleEmail({
-            to: "gamerteacher12@gmail.com"
+            to: "gamerteacher12@gmail.com",
             // to: process.env.SMTP_DAMMAM,
             // cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
             subject: 'Import Quote For Dammam Branch',
