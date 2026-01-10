@@ -98,20 +98,16 @@ export const addEmail = async(req , res)=>{
 export const deleteEmails = async(req,res)=>{
   const {ids} = req.body;
 
-  if (!Array.isArray(ids) || ids.length === 0) {
-      return res.status(400).json({ message: "please select an email to remove !" });
-    }
   
-  const cleanedIds = ids
-      .map((id) => Number(id))
-      .filter((id) => Number.isInteger(id) && id > 0);
+  
+ 
 
-    if (cleanedIds.length === 0) {
+    if (!ids) {
       return res.status(400).json({ message: "No valid ids provided" });
     }
 
     const deletedCount = await dashboardModel.destroy({
-      where: { id: cleanedIds },
+      where: { id: ids },
     });
 
     return res.json({
