@@ -13,7 +13,7 @@ export const authenticationMiddleware = ()=>{
             const isBlackListed = await blacklistTokensModel.findOne({ where: { tokenId: decodedData.jti } });
             if(isBlackListed) return res.status(401).json({message: "please login first" });
             // data from db of admins
-            const user = await userModel.findOne({where:{id:decodedData.id}},'-password -__v ');
+            const user = await adminModel.findOne({where:{id:decodedData.id}},'-password -__v ');
             if(!user) return res.status(404).json({message: "admin not found" });
             // ADD USER DATA IN THE REQ
             req.loggedInUser = user;

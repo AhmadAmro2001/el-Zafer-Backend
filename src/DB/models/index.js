@@ -5,3 +5,5 @@ export * from './quotes.import.model.js';
 export * from './quotes.export.model.js';
 export * from './quotes.clearness.model.js';
 export * from './user.app.model.js';
+export * from './dashboard.emails.js';
+export * from './new.model.js'
