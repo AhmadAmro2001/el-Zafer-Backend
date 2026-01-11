@@ -57,7 +57,7 @@ export const trackingPersonalEffectService = async(req,res)=>{
 // tracking clearance by bil no
 export const trackingClearanceByBillNoService = async(req,res)=>{
     const {BillNo , PortOfDischarge, VesselEnName}= req.query;
-    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE REPLACE(REPLACE(REPLACE(REPLACE(BillNo, '-', ''), ' ', ''), '/', ''), '.', '') =
+    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone,VesselEnName FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE REPLACE(REPLACE(REPLACE(REPLACE(BillNo, '-', ''), ' ', ''), '/', ''), '.', '') =
   REPLACE(REPLACE(REPLACE(REPLACE('${BillNo}', '-', ''), ' ', ''), '/', ''), '.', '') AND PortOfDischarge = '${PortOfDischarge}'  `);
     // const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE BillNo = '${BillNo}' AND PortOfDischarge = '${PortOfDischarge}'`);
     if(data[0].length === 0){
