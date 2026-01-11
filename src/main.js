@@ -14,7 +14,9 @@ const corsOptions = {
     process.env.CORS_ORIGIN,
     "https://alzafercargo.com",             // your main domain
     "https://www.alzafercargo.com", 
-    'http://localhost:5173'],
+    'http://localhost:5173',
+    'https://al-zafer-dashboard.vercel.app'
+  ],
   methods: ['GET', 'POST','OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization',"accesstoken"],
   exposedHeaders: ['Content-Type', 'Authorization'],
