@@ -16,7 +16,7 @@ const corsOptions = {
     "https://www.alzafercargo.com", 
     'http://localhost:5173'],
   methods: ['GET', 'POST','OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization',"accesstoken"],
   exposedHeaders: ['Content-Type', 'Authorization'],
   credentials: false, }
 
