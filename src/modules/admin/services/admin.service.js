@@ -1,7 +1,9 @@
 import { compareSync, hashSync } from "bcrypt";
-import {adminModel, blacklistTokensModel, dashboardModel} from "../../../DB/models/index.js";
+import {adminModel, blacklistTokensModel, dashboardModel, newsModel} from "../../../DB/models/index.js";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from "nanoid";
+import { cloudinary } from "../../../config/cloudinary.config.js";
 
 
 // adding an admin
@@ -135,3 +137,41 @@ export const getEmails = async (req, res) => {
 
   return res.status(200).json({ jeddahEmails, riyadhEmails, dammamEmails });
 };
+
+// news section
+// adding new posts
+export const addNewsPost = async(req , res)=>{
+  const {id} = req.loggedInUser
+  const { title , content } = req.body;
+
+  const data = {
+    title,
+    content
+  }
+
+  if(req.files?.length){
+        const folderId = nanoid(4)
+        let images = {
+            URLS :[],
+            folderId
+        }
+        for (const file of req.files) {
+            const {secure_url, public_id} =await cloudinary().uploader.upload(file.path,{
+                folder : `${process.env.CLOUD_FOLDER}/posts/${folderId}`
+            })
+            images.URLS.push({secure_url,public_id});
+        }
+        data.images = images
+    }
+  
+    const post = await newsModel.create(data);
+    return res.status(201).json({message:"Post added successfully !" , data})
+}
+
+
+
+// listing all posts
+export const listPosts = async(req,res)=>{
+  const data = await newsModel.findAll();
+  return res.status(200).json({message:'Posts listed successfully',data})
+}

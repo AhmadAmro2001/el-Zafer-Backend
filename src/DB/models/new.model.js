@@ -11,10 +11,11 @@ const newsModel = sequelizeConfig.define('tbl_news',{
         type:DataTypes.STRING,
         allowNull: true
     },
-    images:{
-        type:DataTypes.STRING,
-        allowNull: true
-    },
+    images: {
+        type: DataTypes.JSONB,   // [{ secure_url, public_id }]
+        allowNull: false,
+        defaultValue: [],
+    }           
 },{
     timestamps:true,
     createdAt:'created_at'
