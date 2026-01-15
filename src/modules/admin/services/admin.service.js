@@ -175,3 +175,11 @@ export const listPosts = async(req,res)=>{
   const data = await newsModel.findAll();
   return res.status(200).json({message:'Posts listed successfully',data})
 }
+
+
+// delete post
+export const deletePost = async(req,res)=>{
+  const {id} = req.params;
+  await newsModel.destroy({where:{id}});
+  return res.status(200).json({message:"Post deleted successfully"})
+}
