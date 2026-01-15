@@ -179,7 +179,19 @@ export const listPosts = async(req,res)=>{
 
 // delete post
 export const deletePost = async(req,res)=>{
-  const {id} = req.params;
-  await newsModel.destroy({where:{id}});
-  return res.status(200).json({message:"Post deleted successfully"})
+  const {ids} = req.body;
+
+
+  if (!ids) {
+      return res.status(400).json({ message: "No valid ids provided" });
+    }
+
+    const deletedPost = await newsModel.destroy({
+      where: { id: ids },
+    });
+
+    return res.json({
+      message: "Deleted successfully",
+      deletedPost,
+    });
 }

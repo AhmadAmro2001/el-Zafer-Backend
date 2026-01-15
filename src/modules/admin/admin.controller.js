@@ -17,6 +17,7 @@ adminController.post(
     errorHandler(adminService.addNewsPost)
 );
 adminController.get('/get-news',errorHandler(adminService.listPosts))
+adminController.post('/delete-news',errorHandler(adminService.deletePost));
 
 
 
