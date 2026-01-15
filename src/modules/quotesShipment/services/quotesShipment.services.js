@@ -40,7 +40,7 @@ export const addQuoteForImport = async(req,res)=>{
          await sendSimpleEmail({
             // to: "gamerteacher12@gmail.com",
             to: process.env.SMTP_DAMMAM,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD , process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Import Quote For Dammam Branch',
             html
         })
@@ -48,7 +48,7 @@ export const addQuoteForImport = async(req,res)=>{
     if(portOfDischarge?.toLowerCase() === 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_RIYADH,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Import Quote For Riyadh Branch',
             html
         })
@@ -56,7 +56,7 @@ export const addQuoteForImport = async(req,res)=>{
     if(emailTo?.toLowerCase() === 'import_fcl' && portOfDischarge?.toLowerCase() !== 'dammam' && portOfDischarge?.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_IMPORT_1,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Import Quote FCL',
             html
         })
@@ -64,7 +64,7 @@ export const addQuoteForImport = async(req,res)=>{
     if( emailTo.toLowerCase() === 'import_lcl'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_IMPORT_1,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Import Quote LCL',
             html
         })
@@ -72,7 +72,7 @@ export const addQuoteForImport = async(req,res)=>{
     if( emailTo.toLowerCase() === 'import_air'  && portOfDischarge.toLowerCase() !== 'dammam' && portOfDischarge.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_IMPORT_1,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Import Quote Air Freight',
             html
         })
@@ -121,7 +121,7 @@ export const addQuoteForExport = async(req,res)=>{
     if(portOfLoading.toLowerCase() === 'dammam'){
         await sendSimpleEmail({
             to: process.env.SMTP_DAMMAM,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Export Quote For Dammam Branch',
             html
         })
@@ -129,7 +129,7 @@ export const addQuoteForExport = async(req,res)=>{
     if(portOfLoading.toLowerCase() === 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_RIHADH,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Export Quote For Riyadh Branch',
             html
         })
@@ -137,7 +137,7 @@ export const addQuoteForExport = async(req,res)=>{
     if(emailTo.toLowerCase() === 'export_fcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_EXPORT_1,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Export Quote FCL',
             html
         })
@@ -145,7 +145,7 @@ export const addQuoteForExport = async(req,res)=>{
     if(emailTo.toLowerCase() === 'export_lcl' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_EXPORT_1,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Export Quote LCL',
             html
         })
@@ -153,7 +153,7 @@ export const addQuoteForExport = async(req,res)=>{
     if(emailTo.toLowerCase() === 'export_air' && portOfLoading.toLowerCase() !== 'dammam' && portOfLoading.toLowerCase() !== 'riyadh'){
         await sendSimpleEmail({
             to: process.env.SMTP_EXPORT_2,
-            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+            cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
             subject: 'Export Quote Air Freight',
             html
         })
@@ -187,7 +187,7 @@ export const addQuoteForClearness = async(req,res)=>{
     `
     await sendSimpleEmail({
         to: process.env.SMTP_CLEARANCE,
-        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD].filter(Boolean),
+        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
         subject: 'Customs Clearance Quote',
         html
     })
