@@ -8,7 +8,7 @@ const newsModel = sequelizeConfig.define('tbl_news',{
         allowNull: true
     },
     content:{
-        type:DataTypes.STRING,
+        type:DataTypes.TEXT,
         allowNull: true
     },
     images: {

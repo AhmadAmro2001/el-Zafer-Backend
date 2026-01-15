@@ -172,7 +172,9 @@ export const addNewsPost = async(req , res)=>{
 
 // listing all posts
 export const listPosts = async(req,res)=>{
-  const data = await newsModel.findAll();
+  const data = await newsModel.findAll({
+  order: [["created_at", "DESC"]],
+});
   return res.status(200).json({message:'Posts listed successfully',data})
 }
 
@@ -185,10 +187,21 @@ export const deletePost = async(req,res)=>{
   if (!ids) {
       return res.status(400).json({ message: "No valid ids provided" });
     }
+    const selectedPost = await newsModel.findOne({ where: { id: ids } })
+
+    const deletedPostImages = selectedPost.images.URLS.map((image) => image.public_id);
+
+    await cloudinary().api.delete_resources(deletedPostImages);
+    await cloudinary().api.delete_folder(`${process.env.CLOUD_FOLDER}/posts/${selectedPost.images.folderId}`);
 
     const deletedPost = await newsModel.destroy({
       where: { id: ids },
     });
+
+    
+
+
+    
 
     return res.json({
       message: "Deleted successfully",
