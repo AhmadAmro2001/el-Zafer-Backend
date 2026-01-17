@@ -189,10 +189,13 @@ export const deletePost = async(req,res)=>{
     }
     const selectedPost = await newsModel.findOne({ where: { id: ids } })
 
-    const deletedPostImages = selectedPost.images.URLS.map((image) => image.public_id);
-
-    await cloudinary().api.delete_resources(deletedPostImages);
-    await cloudinary().api.delete_folder(`${process.env.CLOUD_FOLDER}/posts/${selectedPost.images.folderId}`);
+    const deletedPostImages = selectedPost?.images?.URLS?.map((image) => image.public_id);
+    
+    if (deletedPostImages) {
+      await cloudinary().api.delete_resources(deletedPostImages);
+      await cloudinary().api.delete_folder(`${process.env.CLOUD_FOLDER}/posts/${selectedPost.images.folderId}`);
+    }
+    
 
     const deletedPost = await newsModel.destroy({
       where: { id: ids },
