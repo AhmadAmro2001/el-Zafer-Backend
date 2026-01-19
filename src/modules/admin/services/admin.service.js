@@ -52,12 +52,16 @@ export const loginAdmin = async (req, res) => {
       expiresIn: '1h',
     }
   );
+  
 
   return res.status(200).json({
     message: 'Admin logged in successfully',
-    token,
+    token
   });
 };
+
+// refresh token service
+
 
 
 // logout api
@@ -81,7 +85,7 @@ export const logOutService = async (req,res)=>{
 // adding email and type
 
 export const addEmail = async(req , res)=>{
-  const {id} = req.loggedInUser
+  // const {id} = req.loggedInUser
   const { email , type , place , order} = req.body
 
   const data = dashboardModel.build({
@@ -141,7 +145,7 @@ export const getEmails = async (req, res) => {
 // news section
 // adding new posts
 export const addNewsPost = async(req , res)=>{
-  const {id} = req.loggedInUser
+  // const {id} = req.loggedInUser
   const { title , content } = req.body;
 
   const data = {
