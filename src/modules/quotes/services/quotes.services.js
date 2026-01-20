@@ -52,7 +52,7 @@ export const getQuote = async(req,res)=>{
     await sendSimpleEmail({
         to: process.env.SMTP_USER,
         subject: "New Message Added",
-        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL].filter(Boolean),
+        cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL,process.env.SMTP_QOUTES_AHMED].filter(Boolean),
         html
     })
     
