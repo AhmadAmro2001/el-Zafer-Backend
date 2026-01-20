@@ -186,7 +186,8 @@ export const addQuoteForClearness = async(req,res)=>{
     <p>Required Service: ${service}</p>
     `
     await sendSimpleEmail({
-        to: process.env.SMTP_CLEARANCE,
+        // to: process.env.SMTP_CLEARANCE,
+        to:"gamerteacher12@gmail.com",
         cc: [process.env.SMTP_MESSAGES_WAEL, process.env.SMTP_MESSAGES_ADEL, process.env.SMTP_MESSAGES_MAHMOUD, process.env.SMTP_QOUTES_AHMED].filter(Boolean),
         subject: 'Customs Clearance Quote',
         html
