@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as trackingServices from "./services/trackShipment.services.js";
+import * as pdfServices from "./services/trackShipmentPdf.service.js"
 import { errorHandler } from "../../middleware/index.js";
 
 
@@ -13,6 +14,9 @@ trackShipmentController.get('/track-clearance-billno',errorHandler(trackingServi
 trackShipmentController.get('/track-clearance-containerno',errorHandler(trackingServices.trackingClearanceByContainerNoService));
 trackShipmentController.get('/track-air-flight',errorHandler(trackingServices.trackingAirFlightService));
 trackShipmentController.get('/test',errorHandler(trackingServices.testService));
+
+// pdf generator
+trackShipmentController.get('/track-full-container/pdf',errorHandler(pdfServices.trackingFullContainerPdfService));
 
 
 export default trackShipmentController

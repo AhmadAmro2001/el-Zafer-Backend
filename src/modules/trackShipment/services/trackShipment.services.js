@@ -18,6 +18,8 @@ export const trackingFullContainerService = async (req,res)=>{
     const result = data[0];
     return res.status(200).json({message:'Data found',result,exportImport})
 }
+// pdf for tracking full container
+
 
 // tracking lcl by container
 export const trackingLCLByContainerService =async( req,res)=>{
