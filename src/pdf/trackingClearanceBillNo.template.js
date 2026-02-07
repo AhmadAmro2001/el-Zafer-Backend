@@ -1,25 +1,28 @@
-export function trackingFullContainerReportTemplate({
-  BillNumber,
-  ContainerNumber,
-  PortOfLoading,
+export function trackingClearanceBillNoReportTemplate({
+  BillNo,
   PortOfDischarge,
-  exportImport,
-  result,
+  result, // object or array
 }) {
-  const row = result[0];
+  const row = Array.isArray(result) ? (result[0] || {}) : (result || {});
+
+  const vessel = (row?.VesselEnName ?? "").toString().trim();
+  const billLabel = vessel ? "H/BL" : "AWB No";
 
   const status =
-    row.ArrivalDate ? "Arrived" :
-    row.DepartureDate ? "Departed" :
+    row?.ClearanceDone ? "Cleared" :
+    row?.ContainerUnderClearance ? "Under Clearance" :
+    row?.UnderTracking ? "Under Tracking" :
+    row?.AtThePort ? "At The Port" :
     "In progress";
 
-  // ✅ Titles change depending on import/export
-  const leftTitle  = exportImport === "import" ? "B/L Release"     : "Departure Date";
-  const rightTitle = exportImport === "import" ? "Arrived"         : "Arrival Date";
-
-  // ✅ Values mapping depending on import/export
-  const leftValue  = exportImport === "import" ? row.DepartureDate : row.DepartureDate; // same field, different label
-  const rightValue = exportImport === "import" ? row.ArrivalDate   : row.ArrivalDate;   // same field, different label
+  const badgeHtml =
+    status === "Cleared"
+      ? `<span class="badge arrived">STATUS: CLEARED</span>`
+      : (status === "Under Clearance" || status === "Under Tracking")
+        ? `<span class="badge departed">STATUS: ${escapeHtml(status.toUpperCase())}</span>`
+        : status === "At The Port"
+          ? `<span class="badge progress">STATUS: AT THE PORT</span>`
+          : `<span class="badge progress">STATUS: IN PROGRESS</span>`;
 
   return `<!doctype html>
 <html>
@@ -51,23 +54,19 @@ export function trackingFullContainerReportTemplate({
   <div class="header">
     <div>
       <div class="title">Shipment Status Report</div>
-      <div class="sub">H/BL: ${escapeHtml(BillNumber)} • Container No: ${escapeHtml(ContainerNumber)} • ${escapeHtml(exportImport.toUpperCase())}</div>
+      <div class="sub">Clearance • ${billLabel}: ${escapeHtml(BillNo)} • Port of Discharge: ${escapeHtml(PortOfDischarge)}</div>
     </div>
     <img class="logo" src="https://res.cloudinary.com/djvzbznry/image/upload/v1767658761/Al-zafer_Full_Logo_kz2l7t.png" />
   </div>
 
   <div>
-    ${
-      status === "Arrived" ? `<span class="badge arrived">STATUS: ARRIVED</span>` :
-      status === "Departed" ? `<span class="badge departed">STATUS: DEPARTED</span>` :
-      `<span class="badge progress">STATUS: IN PROGRESS</span>`
-    }
+    ${badgeHtml}
   </div>
 
   <div class="grid">
     <div class="card">
-      <div class="k">Port of Loading</div>
-      <div class="v">${escapeHtml(PortOfLoading)}</div>
+      <div class="k">${billLabel}</div>
+      <div class="v">${escapeHtml(BillNo)}</div>
     </div>
     <div class="card">
       <div class="k">Port of Discharge</div>
@@ -75,14 +74,35 @@ export function trackingFullContainerReportTemplate({
     </div>
   </div>
 
+  <div class="grid">
+    <div class="card">
+      <div class="k">Vessel Name</div>
+      <div class="v">${escapeHtml(vessel || "-")}</div>
+    </div>
+    <div class="card">
+      <div class="k">Current Status</div>
+      <div class="v">${escapeHtml(status)}</div>
+    </div>
+  </div>
+
   <div class="card" style="margin-top:10px;">
     <div class="k">Key Dates</div>
     <table>
-      <thead><tr><th>${leftTitle}</th><th>${rightTitle}</th></tr></thead>
+      <thead>
+        <tr>
+        <th>Under Clearance</th>
+          <th>At The Port</th>
+          <th>Clearance Done</th>
+          <th>Under Trucking</th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
-          <td>${escapeHtml(formatDate(leftValue) || "-")}</td>
-          <td>${escapeHtml(formatDate(rightValue) || "-")}</td>
+          <td>${escapeHtml(formatDate(row?.ContainerUnderClearance) || "-")}</td>
+          <td>${escapeHtml(formatDate(row?.AtThePort) || "-")}</td>
+          <td>${escapeHtml(formatDate(row?.ClearanceDone) || "-")}</td>
+          <td>${escapeHtml(formatDate(row?.UnderTracking) || "-")}</td>
+
         </tr>
       </tbody>
     </table>
@@ -94,7 +114,6 @@ export function trackingFullContainerReportTemplate({
 </body>
 </html>`;
 }
-
 
 function escapeHtml(s) {
   return String(s ?? "")

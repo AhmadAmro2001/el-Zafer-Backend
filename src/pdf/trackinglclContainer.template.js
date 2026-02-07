@@ -1,25 +1,32 @@
-export function trackingFullContainerReportTemplate({
-  BillNumber,
+export function trackingLclContainerReportTemplate({
   ContainerNumber,
-  PortOfLoading,
   PortOfDischarge,
-  exportImport,
   result,
 }) {
-  const row = result[0];
+  const rows = Array.isArray(result) ? result : [];
 
+  // Status priority (most "final" wins)
   const status =
-    row.ArrivalDate ? "Arrived" :
-    row.DepartureDate ? "Departed" :
+    rows.some((r) => r?.CargoRelease) ? "Cargo Released" :
+    rows.some((r) => r?.DORelease) ? "D/O Released" :
+    rows.some((r) => r?.Stored) ? "Stored" :
+    rows.some((r) => r?.Arrived) ? "Arrived" :
     "In progress";
 
-  // ✅ Titles change depending on import/export
-  const leftTitle  = exportImport === "import" ? "B/L Release"     : "Departure Date";
-  const rightTitle = exportImport === "import" ? "Arrived"         : "Arrival Date";
+  // Map status -> your existing badge classes (arrived / departed / progress)
+  // We'll reuse:
+  // - arrived style for "Arrived" / "Cargo Released"
+  // - departed style for "D/O Released" / "Stored"
+  // - progress for "In progress"
+  const badgeHtml =
+    (status === "Arrived" || status === "Cargo Released")
+      ? `<span class="badge arrived">STATUS: ${escapeHtml(status.toUpperCase())}</span>`
+      : (status === "D/O Released" || status === "Stored")
+        ? `<span class="badge departed">STATUS: ${escapeHtml(status.toUpperCase())}</span>`
+        : `<span class="badge progress">STATUS: IN PROGRESS</span>`;
 
-  // ✅ Values mapping depending on import/export
-  const leftValue  = exportImport === "import" ? row.DepartureDate : row.DepartureDate; // same field, different label
-  const rightValue = exportImport === "import" ? row.ArrivalDate   : row.ArrivalDate;   // same field, different label
+  const totalHbl = rows.length;
+  const totalPcs = rows.reduce((sum, r) => sum + (Number(r?.NOOfPcs) || 0), 0);
 
   return `<!doctype html>
 <html>
@@ -44,6 +51,8 @@ export function trackingFullContainerReportTemplate({
     th, td { border: 1px solid #ddd; padding: 8px; text-align:left; }
     th { background:#f5f5f5; }
     .footer { position: fixed; bottom: 0; left: 0; right: 0; font-size: 10px; color:#666; padding: 8mm 12mm; }
+    /* PDF breaking */
+    tr { page-break-inside: avoid; }
   </style>
 </head>
 
@@ -51,23 +60,19 @@ export function trackingFullContainerReportTemplate({
   <div class="header">
     <div>
       <div class="title">Shipment Status Report</div>
-      <div class="sub">H/BL: ${escapeHtml(BillNumber)} • Container No: ${escapeHtml(ContainerNumber)} • ${escapeHtml(exportImport.toUpperCase())}</div>
+      <div class="sub">LCL • Container No: ${escapeHtml(ContainerNumber)} • Port of Discharge: ${escapeHtml(PortOfDischarge)}</div>
     </div>
     <img class="logo" src="https://res.cloudinary.com/djvzbznry/image/upload/v1767658761/Al-zafer_Full_Logo_kz2l7t.png" />
   </div>
 
   <div>
-    ${
-      status === "Arrived" ? `<span class="badge arrived">STATUS: ARRIVED</span>` :
-      status === "Departed" ? `<span class="badge departed">STATUS: DEPARTED</span>` :
-      `<span class="badge progress">STATUS: IN PROGRESS</span>`
-    }
+    ${badgeHtml}
   </div>
 
   <div class="grid">
     <div class="card">
-      <div class="k">Port of Loading</div>
-      <div class="v">${escapeHtml(PortOfLoading)}</div>
+      <div class="k">Container Number</div>
+      <div class="v">${escapeHtml(ContainerNumber)}</div>
     </div>
     <div class="card">
       <div class="k">Port of Discharge</div>
@@ -75,15 +80,41 @@ export function trackingFullContainerReportTemplate({
     </div>
   </div>
 
+  <div class="grid">
+    <div class="card">
+      <div class="k">Total House Bills</div>
+      <div class="v">${escapeHtml(totalHbl)}</div>
+    </div>
+    <div class="card">
+      <div class="k">Total Pieces</div>
+      <div class="v">${escapeHtml(totalPcs)}</div>
+    </div>
+  </div>
+
   <div class="card" style="margin-top:10px;">
-    <div class="k">Key Dates</div>
+    <div class="k">House Bills Details</div>
     <table>
-      <thead><tr><th>${leftTitle}</th><th>${rightTitle}</th></tr></thead>
-      <tbody>
+      <thead>
         <tr>
-          <td>${escapeHtml(formatDate(leftValue) || "-")}</td>
-          <td>${escapeHtml(formatDate(rightValue) || "-")}</td>
+          <th>House Bill No</th>
+          <th>No Of PCS</th>
+          <th>Arrived</th>
+          <th>Stored</th>
+          <th>DO Release</th>
+          <th>Cargo Release</th>
         </tr>
+      </thead>
+      <tbody>
+        ${rows.map((r) => `
+          <tr>
+            <td>${escapeHtml((r?.HousBillNo ?? "").trim() || "-")}</td>
+            <td>${escapeHtml(r?.NOOfPcs ?? "-")}</td>
+            <td>${escapeHtml(formatDate(r?.Arrived) || "-")}</td>
+            <td>${escapeHtml(formatDate(r?.Stored) || "-")}</td>
+            <td>${escapeHtml(formatDate(r?.DORelease) || "-")}</td>
+            <td>${escapeHtml(formatDate(r?.CargoRelease) || "-")}</td>
+          </tr>
+        `).join("")}
       </tbody>
     </table>
   </div>
@@ -94,7 +125,6 @@ export function trackingFullContainerReportTemplate({
 </body>
 </html>`;
 }
-
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -109,5 +139,6 @@ function formatDate(value) {
   if (!value) return "";
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return String(value);
+  // keep same format style you used before (dd/mm/yyyy)
   return d.toLocaleDateString("en-GB");
 }

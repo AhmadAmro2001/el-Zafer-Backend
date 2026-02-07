@@ -1,25 +1,40 @@
-export function trackingFullContainerReportTemplate({
-  BillNumber,
-  ContainerNumber,
-  PortOfLoading,
-  PortOfDischarge,
+export function trackingAirFlightReportTemplate({
+  AWBNo,
+  Destination,
+  NOOfPcs,
+  TotalWeight,
   exportImport,
   result,
 }) {
-  const row = result[0];
+  const row = (Array.isArray(result) && result[0]) ? result[0] : {};
 
   const status =
-    row.ArrivalDate ? "Arrived" :
-    row.DepartureDate ? "Departed" :
+    row?.Cleared ? "Cleared" :
+    row?.ArrivalDate ? "Arrived" :
+    row?.DepartureDate ? "Departed" :
     "In progress";
 
-  // ✅ Titles change depending on import/export
-  const leftTitle  = exportImport === "import" ? "B/L Release"     : "Departure Date";
-  const rightTitle = exportImport === "import" ? "Arrived"         : "Arrival Date";
+  // ✅ Same import/export title rules as first PDF
+  // import: ArrivalDate => Arrived, BLReleaseDate => B/L Release Date
+  // export: DepartureDate => Departure Date, ArrivalDate => Arrival Date
+  const leftTitle =
+    exportImport === "import" ? "B/L Release Date" : "Departure Date";
+  const rightTitle =
+    exportImport === "import" ? "Arrived" : "Arrival Date";
 
-  // ✅ Values mapping depending on import/export
-  const leftValue  = exportImport === "import" ? row.DepartureDate : row.DepartureDate; // same field, different label
-  const rightValue = exportImport === "import" ? row.ArrivalDate   : row.ArrivalDate;   // same field, different label
+  const leftValue =
+    exportImport === "import" ? row?.BLReleaseDate : row?.DepartureDate;
+  const rightValue =
+    row?.ArrivalDate; // for both import/export the right column is arrival
+
+  const badgeHtml =
+    status === "Cleared"
+      ? `<span class="badge arrived">STATUS: CLEARED</span>`
+      : status === "Arrived"
+        ? `<span class="badge arrived">STATUS: ARRIVED</span>`
+        : status === "Departed"
+          ? `<span class="badge departed">STATUS: DEPARTED</span>`
+          : `<span class="badge progress">STATUS: IN PROGRESS</span>`;
 
   return `<!doctype html>
 <html>
@@ -51,27 +66,34 @@ export function trackingFullContainerReportTemplate({
   <div class="header">
     <div>
       <div class="title">Shipment Status Report</div>
-      <div class="sub">H/BL: ${escapeHtml(BillNumber)} • Container No: ${escapeHtml(ContainerNumber)} • ${escapeHtml(exportImport.toUpperCase())}</div>
+      <div class="sub">AIR • AWB No: ${escapeHtml(AWBNo)} • ${escapeHtml(exportImport.toUpperCase())}</div>
     </div>
     <img class="logo" src="https://res.cloudinary.com/djvzbznry/image/upload/v1767658761/Al-zafer_Full_Logo_kz2l7t.png" />
   </div>
 
   <div>
-    ${
-      status === "Arrived" ? `<span class="badge arrived">STATUS: ARRIVED</span>` :
-      status === "Departed" ? `<span class="badge departed">STATUS: DEPARTED</span>` :
-      `<span class="badge progress">STATUS: IN PROGRESS</span>`
-    }
+    ${badgeHtml}
   </div>
 
   <div class="grid">
     <div class="card">
-      <div class="k">Port of Loading</div>
-      <div class="v">${escapeHtml(PortOfLoading)}</div>
+      <div class="k">Destination</div>
+      <div class="v">${escapeHtml(Destination)}</div>
     </div>
     <div class="card">
-      <div class="k">Port of Discharge</div>
-      <div class="v">${escapeHtml(PortOfDischarge)}</div>
+      <div class="k">No Of PCS</div>
+      <div class="v">${escapeHtml(NOOfPcs)}</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="k">Total Weight</div>
+      <div class="v">${escapeHtml(TotalWeight)}</div>
+    </div>
+    <div class="card">
+      <div class="k">Cleared</div>
+      <div class="v">${escapeHtml(formatDate(row?.Cleared) || "-")}</div>
     </div>
   </div>
 
@@ -94,7 +116,6 @@ export function trackingFullContainerReportTemplate({
 </body>
 </html>`;
 }
-
 
 function escapeHtml(s) {
   return String(s ?? "")

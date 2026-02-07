@@ -17,7 +17,12 @@ trackShipmentController.get('/test',errorHandler(trackingServices.testService));
 
 // pdf generator
 trackShipmentController.get('/track-full-container/pdf',errorHandler(pdfServices.trackingFullContainerPdfService));
-
+trackShipmentController.get('/track-lcl-container/pdf',errorHandler(pdfServices.trackingLclByContainerPdf));
+trackShipmentController.get('/track-lcl-housebillno/pdf',errorHandler(pdfServices.trackingLclByHouseBillNoPdfService));
+trackShipmentController.get('/track-personal-effect/pdf',errorHandler(pdfServices.trackingPersonalEffectPdfService));
+trackShipmentController.get('/track-clearance-billno/pdf',errorHandler(pdfServices.trackingClearanceByBillNoPdfService));
+trackShipmentController.get('/track-clearance-containerno/pdf',errorHandler(pdfServices.trackingClearanceByContainerNoPdfService));
+trackShipmentController.get('/track-air-flight/pdf',errorHandler(pdfServices.trackingAirFlightPdfService));
 
 export default trackShipmentController
 
