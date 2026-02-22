@@ -133,7 +133,7 @@ const cleanBill = (v = "") =>
   const message =
     dbBill === userBill
       ? "Data found"
-      : "Closest match found (BillNo might be mistyped)";
+      : "Closest match found (h/bl no might be mistyped)";
 
   return res.status(200).json({
     message,
