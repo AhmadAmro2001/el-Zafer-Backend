@@ -5,6 +5,7 @@ import trackShipmentController from "../modules/trackShipment/trackShipment.cont
 import helmet from "helmet"
 import {rateLimit} from "express-rate-limit"
 import { userAppController } from "../modules/userApp/userApp.controller.js"
+import analyticsController from "../modules/analytics/analytics.controller.js"
 
 
 
@@ -24,6 +25,7 @@ const controllerHandler = (app)=>{
     app.use('/quotes',quotesController)             
     app.use('/quotes/shipment',quotesShipmentController)
     app.use('/track-shipment',trackShipmentController)
+    app.use('/analytics',analyticsController)
 
     // testing render
     

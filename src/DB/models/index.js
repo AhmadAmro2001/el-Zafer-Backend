@@ -7,3 +7,5 @@ export * from './quotes.clearness.model.js';
 export * from './user.app.model.js';
 export * from './dashboard.emails.js';
 export * from './new.model.js'
+export * from './trackingLogs.model.js';
+export * from './visit.model.js';
