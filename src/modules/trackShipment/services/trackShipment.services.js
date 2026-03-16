@@ -1,4 +1,5 @@
 import { mssqlSequelize } from "../../../DB/connection.js";
+import { trackingLogsModel } from "../../../DB/models/trackingLogs.model.js";
 
 // update done
 // tracking full container 
@@ -55,6 +56,9 @@ export const trackingFullContainerService = async (req,res)=>{
   }
 
   if (exact.length > 0) {
+    await trackingLogsModel.create({
+      trackingNumber: exact[0].BillNumber 
+    });
     return res.status(200).json({
       message: "Data found",
       result: exact,
@@ -109,11 +113,20 @@ export const trackingFullContainerService = async (req,res)=>{
         ? "Data found"
         : "Closest match found (bill no might be mistyped)";
 
+    await trackingLogsModel.create({
+      trackingNumber: fuzzy[0].BillNumber 
+    });
+    
+
+    
+
+
     return res.status(200).json({
       message,
       result: fuzzy,
       exportImport,
       matchType: dbBill === userBill ? "exact" : "closest",
+      
     });
   }
 
@@ -130,6 +143,9 @@ export const trackingLCLByContainerService =async( req,res)=>{
         return res.status(404).json({message:'Data not found'})
     }
     const result = data[0];
+    await trackingLogsModel.create({
+      trackingNumber: BillNumber 
+    });
     return res.status(200).json({message:'Data found',result})
 }
 
@@ -173,6 +189,9 @@ export const trackingLCLByHouseBillNoService = async(req,res)=>{
   });
 
   if (exact.length > 0) {
+    await trackingLogsModel.create({
+      trackingNumber: exact[0].HousBillNo
+    });
     return res.status(200).json({
       message: "Data found",
       result: exact,
@@ -228,6 +247,9 @@ export const trackingLCLByHouseBillNoService = async(req,res)=>{
         ? "Data found"
         : "Closest match found (h/bl no might be mistyped)";
 
+        await trackingLogsModel.create({
+      trackingNumber: fuzzy[0].HousBillNo
+    })
     return res.status(200).json({
       message,
       result: fuzzy,
@@ -278,6 +300,9 @@ const cleanBill = (v = "") =>
     });
 
     if (exact.length > 0) {
+      await trackingLogsModel.create({
+      trackingNumber: exact[0].HousBillNo
+    })
       return res.status(200).json({ message: "Data found", result: exact, matchType: "exact" });
     }
 
@@ -329,7 +354,9 @@ const cleanBill = (v = "") =>
     dbBill === userBill
       ? "Data found"
       : "Closest match found (h/bl no might be mistyped)";
-
+      await trackingLogsModel.create({
+      trackingNumber: fuzzy[0].HousBillNo
+    })
   return res.status(200).json({
     message,
     result: fuzzy,
@@ -343,13 +370,16 @@ const cleanBill = (v = "") =>
 // tracking clearance by bil no
 export const trackingClearanceByBillNoService = async(req,res)=>{
     const {BillNo , PortOfDischarge, VesselEnName}= req.query;
-    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone,VesselEnName FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE REPLACE(REPLACE(REPLACE(REPLACE(BillNo, '-', ''), ' ', ''), '/', ''), '.', '') =
+    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone,VesselEnName,BillNo FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE REPLACE(REPLACE(REPLACE(REPLACE(BillNo, '-', ''), ' ', ''), '/', ''), '.', '') =
   REPLACE(REPLACE(REPLACE(REPLACE('${BillNo}', '-', ''), ' ', ''), '/', ''), '.', '') AND PortOfDischarge = '${PortOfDischarge}'  `);
     // const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingClearanceAndTrackingbyBLNo WHERE BillNo = '${BillNo}' AND PortOfDischarge = '${PortOfDischarge}'`);
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
     const result = data[0][0];
+    await trackingLogsModel.create({
+      trackingNumber: data[0][0].BillNo
+    })
     return res.status(200).json({message:'Data found',result})
 }
 
@@ -357,11 +387,14 @@ export const trackingClearanceByBillNoService = async(req,res)=>{
 // tracking clearance by container no
 export const trackingClearanceByContainerNoService = async(req,res)=>{
     const {ContainerNumber , PortOfDischarge, VesselEnName}= req.query;
-    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone FROM vw_TrackingClearanceAndTrackingbyContainerNo WHERE ContainerNumber = '${ContainerNumber}' AND PortOfDischarge = '${PortOfDischarge}' AND VesselEnName = '${VesselEnName}'`);
+    const data = await mssqlSequelize.query(`SELECT ContainerUnderClearance,AtThePort,UnderTracking,ClearanceDone,ContainerNumber FROM vw_TrackingClearanceAndTrackingbyContainerNo WHERE ContainerNumber = '${ContainerNumber}' AND PortOfDischarge = '${PortOfDischarge}' AND VesselEnName = '${VesselEnName}'`);
     // const data = await mssqlSequelize.query(`SELECT * FROM vw_TrackingClearanceAndTrackingbyContainerNo `)
     if(data[0].length === 0){
         return res.status(404).json({message:'Data not found'})
     }
+    await trackingLogsModel.create({
+      trackingNumber: ContainerNumber
+    })
     const result = data[0];
     return res.status(200).json({message:'Data found',result})
 }
@@ -422,6 +455,9 @@ export const trackingAirFlightService = async(req,res)=>{
   });
 
   if (exact.length > 0) {
+    await trackingLogsModel.create({
+      trackingNumber: exact[0].AWBNo
+    })
     return res.status(200).json({
       message: "Data found",
       result: exact,
@@ -480,6 +516,9 @@ export const trackingAirFlightService = async(req,res)=>{
         ? "Data found"
         : "Closest match found (AWB no might be mistyped)";
 
+    await trackingLogsModel.create({
+      trackingNumber: fuzzy[0].AWBNo
+    })
     return res.status(200).json({
       message,
       result: fuzzy,

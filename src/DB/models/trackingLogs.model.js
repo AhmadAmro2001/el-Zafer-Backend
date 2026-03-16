@@ -3,7 +3,7 @@ import { sequelizeConfig } from "../connection.js";
 
 
 
-const trackingLogsModel = sequelizeConfig.define('tbl_quotes_clearness',{
+const trackingLogsModel = sequelizeConfig.define('tbl_tracking_logs',{
     trackingNumber:{
         type:DataTypes.STRING,
         allowNull:true
