@@ -7,6 +7,6 @@ const analyticsController = Router();
 
 
 analyticsController.post('/get-analytics',analyticsService.logVisitService);
-
+analyticsController.get('/get-analytics',analyticsService.getLogsService);
 
 export default analyticsController

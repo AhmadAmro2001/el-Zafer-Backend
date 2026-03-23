@@ -1,5 +1,5 @@
-import { visitsModel } from "../../../DB/models/index.js";
-
+import { visitsModel, trackingLogsModel } from "../../../DB/models/index.js";
+import {Op} from 'sequelize'
 
 // this api used for the website
 export const  logVisitService = async (req,res)=>{
@@ -10,4 +10,48 @@ export const  logVisitService = async (req,res)=>{
         deviceType:isWebOrMobile ? 'mobile' : 'web',
     });
     return res.status(200).json({message:"visit logged successfully",userAgent})
+}
+
+// get all log and tacking done
+export const getLogsService = async (req,res)=>{
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    const visitsWeb = await visitsModel.findAll({
+        where:{
+            deviceType:'web',
+            createdAt: {
+                [Op.gte]: twoDaysAgo
+            },
+        },
+        order:[['createdAt','DESC']]
+    });
+    const visitsMobile = await visitsModel.findAll({
+        where:{
+            deviceType:'mobile',
+            createdAt: {
+                [Op.gte]: twoDaysAgo
+            },
+        },
+        order:[['createdAt','DESC']]
+    });
+
+    const trackingLogs = await trackingLogsModel.findAll({
+        where:{
+            createdAt:{
+                [Op.gte]:twoDaysAgo
+            }
+        },
+        order:[['createdAt','DESC']]
+    });
+
+
+    return res.status(200).json({
+        message:"logs fetched successfully",
+        result:[
+            {name:'visitsWeb',visitsWeb},
+            {name:'visitsMobile',visitsMobile},
+            {name:'trackingLogs',trackingLogs}
+        ]
+    })
 }
