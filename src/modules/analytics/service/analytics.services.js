@@ -48,10 +48,8 @@ export const getLogsService = async (req,res)=>{
 
     return res.status(200).json({
         message:"logs fetched successfully",
-        result:[
-            {name:'visitsWeb',visitsWeb},
-            {name:'visitsMobile',visitsMobile},
-            {name:'trackingLogs',trackingLogs}
-        ]
+        visitsWeb,
+        visitsMobile,
+        trackingLogs 
     })
 }
