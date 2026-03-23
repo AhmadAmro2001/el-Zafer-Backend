@@ -15,7 +15,7 @@ export const  logVisitService = async (req,res)=>{
 // get all log and tacking done
 export const getLogsService = async (req,res)=>{
     const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 7);
 
     const visitsWeb = await visitsModel.findAll({
         where:{
